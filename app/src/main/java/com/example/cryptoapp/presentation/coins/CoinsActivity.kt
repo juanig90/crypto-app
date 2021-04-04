@@ -1,9 +1,11 @@
-package com.example.cryptoapp
+package com.example.cryptoapp.presentation.coins
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.cryptoapp.CryptoApp
+import com.example.cryptoapp.R
 import javax.inject.Inject
 
 class CoinsActivity : AppCompatActivity() {

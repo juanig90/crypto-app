@@ -1,4 +1,4 @@
-package com.example.cryptoapp
+package com.example.cryptoapp.presentation.coins
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject
