@@ -1,4 +1,4 @@
-package com.example.cryptoapp.data
+package com.example.cryptoapp.data.remote
 
 import com.example.cryptoapp.domain.entity.Coin
 
