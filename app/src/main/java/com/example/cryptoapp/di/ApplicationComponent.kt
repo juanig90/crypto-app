@@ -13,7 +13,7 @@ import dagger.Module
 )
 interface ApplicationComponent {
 
-  fun createCoinsFactory(): CoinsComponent.Factory
+  fun coinsComponent(): CoinsComponent.Factory
 }
 
 @Module(subcomponents = [CoinsComponent::class])
