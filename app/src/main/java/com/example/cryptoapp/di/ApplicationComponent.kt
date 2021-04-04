@@ -1,19 +1,20 @@
 package com.example.cryptoapp.di
 
-import com.example.cryptoapp.presentation.coins.di.CoinViewModelModule
-import com.example.cryptoapp.presentation.coins.CoinsActivity
 import com.example.cryptoapp.ViewModelBuilderModule
+import com.example.cryptoapp.presentation.coins.di.CoinsComponent
 import dagger.Component
+import dagger.Module
 
 @Component(
     modules = [
+        Subcomponents::class,
         ViewModelBuilderModule::class,
-        CoinViewModelModule::class
     ]
 )
 interface ApplicationComponent {
 
-
-    fun inject(activity: CoinsActivity)
-
+  fun createCoinsFactory(): CoinsComponent.Factory
 }
+
+@Module(subcomponents = [CoinsComponent::class])
+object Subcomponents

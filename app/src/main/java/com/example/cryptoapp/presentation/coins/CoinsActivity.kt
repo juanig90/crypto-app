@@ -15,7 +15,7 @@ class CoinsActivity : AppCompatActivity() {
     private val viewModel by viewModels<CoinsViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as CryptoApp).application.inject(this)
+        (application as CryptoApp).application.createCoinsFactory().create().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coins_activity)
     }
