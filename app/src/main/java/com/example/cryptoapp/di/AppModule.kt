@@ -1,7 +1,10 @@
 package com.example.cryptoapp.di
 
+import com.example.cryptoapp.data.MapperImpl
 import com.example.cryptoapp.data.CoinsDataSource
 import com.example.cryptoapp.data.CoinsRepositoryImpl
+import com.example.cryptoapp.data.Mapper
+import com.example.cryptoapp.data.entity.CoinApiResponse
 import com.example.cryptoapp.data.remote.CoinAPI
 import com.example.cryptoapp.data.remote.CoinRemoteDataSource
 import com.example.cryptoapp.domain.entity.Coin
@@ -17,8 +20,12 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun providesMapper(): Mapper<Coin, CoinApiResponse> = MapperImpl()
+
+    @Singleton
+    @Provides
     fun providesCoinsApi(): CoinAPI = object : CoinAPI {
-        override fun getCoinsList(): List<Coin> {
+        override fun getCoinsList(): List<CoinApiResponse> {
             return listOf()
         }
     }
@@ -31,8 +38,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesRepository(coinRemoteDataSource: CoinRemoteDataSource): CoinsRepository {
-        return CoinsRepositoryImpl(coinRemoteDataSource)
+    fun providesRepository(coinRemoteDataSource: CoinRemoteDataSource,
+                           mapper: Mapper<Coin, CoinApiResponse>): CoinsRepository {
+        return CoinsRepositoryImpl(coinRemoteDataSource, mapper)
     }
 
     @Singleton

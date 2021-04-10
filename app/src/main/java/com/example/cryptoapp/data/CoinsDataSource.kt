@@ -1,8 +1,8 @@
 package com.example.cryptoapp.data
 
-import com.example.cryptoapp.domain.entity.Coin
+import com.example.cryptoapp.data.entity.CoinApiResponse
 
 interface CoinsDataSource {
 
-    fun getCoins(): List<Coin>
+    fun getCoins(): List<CoinApiResponse>
 }
