@@ -4,9 +4,12 @@ import com.example.cryptoapp.ViewModelBuilderModule
 import com.example.cryptoapp.presentation.coins.di.CoinsComponent
 import dagger.Component
 import dagger.Module
+import javax.inject.Singleton
 
+@Singleton
 @Component(
     modules = [
+        AppModule::class,
         Subcomponents::class,
         ViewModelBuilderModule::class,
     ]
