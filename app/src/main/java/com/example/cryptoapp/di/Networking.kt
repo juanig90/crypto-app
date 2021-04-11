@@ -1,5 +1,7 @@
 package com.example.cryptoapp.di
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Converter
@@ -12,10 +14,13 @@ object Networking {
 
     @Singleton
     @Provides
-    fun providesConverter(): Converter.Factory {
-        return MoshiConverterFactory.create()
-    }
+    fun providesMoshi() = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 
+    @Singleton
+    @Provides
+    fun providesConverter(moshi: Moshi): Converter.Factory {
+        return MoshiConverterFactory.create(moshi)
+    }
 
     @Singleton
     @Provides
