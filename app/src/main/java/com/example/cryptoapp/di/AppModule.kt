@@ -1,9 +1,9 @@
 package com.example.cryptoapp.di
 
-import com.example.cryptoapp.data.MapperImpl
 import com.example.cryptoapp.data.CoinsDataSource
 import com.example.cryptoapp.data.CoinsRepositoryImpl
 import com.example.cryptoapp.data.Mapper
+import com.example.cryptoapp.data.MapperImpl
 import com.example.cryptoapp.data.entity.CoinApiResponse
 import com.example.cryptoapp.data.remote.CoinAPI
 import com.example.cryptoapp.data.remote.CoinRemoteDataSource
@@ -13,6 +13,7 @@ import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import com.example.cryptoapp.domain.usecase.CoinsUseCaseImpl
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -24,11 +25,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesCoinsApi(): CoinAPI = object : CoinAPI {
-        override fun getCoinsList(): List<CoinApiResponse> {
-            return listOf()
-        }
-    }
+    fun providesCoinsApi(retrofit: Retrofit): CoinAPI = retrofit.create(CoinAPI::class.java)
 
     @Singleton
     @Provides
