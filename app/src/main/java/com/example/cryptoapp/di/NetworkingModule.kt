@@ -1,9 +1,12 @@
 package com.example.cryptoapp.di
 
+import com.example.cryptoapp.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -12,6 +15,20 @@ import javax.inject.Singleton
 
 @Module
 object NetworkingModule {
+
+    @Singleton
+    @Provides
+    fun providesHttpClient(): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level =
+            if (BuildConfig.DEBUG)
+                HttpLoggingInterceptor.Level.BODY
+            else
+                HttpLoggingInterceptor.Level.NONE
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+    }
 
     @Singleton
     @Provides
@@ -25,11 +42,12 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    fun providesRetrofit(converter: Converter.Factory): Retrofit {
+    fun providesRetrofit(converter: Converter.Factory, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.coingecko.com/api/v3/")
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(converter)
+            .client(okHttpClient)
             .build()
     }
 
