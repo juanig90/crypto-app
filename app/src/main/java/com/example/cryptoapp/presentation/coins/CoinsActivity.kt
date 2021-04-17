@@ -17,6 +17,6 @@ class CoinsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as CryptoApp).application.coinsComponent().create().inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coins_activity)
+        setContentView(R.layout.activity_coins)
     }
 }
