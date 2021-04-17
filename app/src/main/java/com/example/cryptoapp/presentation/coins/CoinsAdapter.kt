@@ -1,11 +1,9 @@
 package com.example.cryptoapp.presentation.coins
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptoapp.R
+import com.example.cryptoapp.databinding.CoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
 
 class CoinsAdapter: RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
@@ -17,8 +15,8 @@ class CoinsAdapter: RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.coin_item, parent, false)
-        return CoinViewHolder(view)
+        val binding = CoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CoinViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
@@ -27,12 +25,10 @@ class CoinsAdapter: RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
 
     override fun getItemCount() = coins.size
 
-    inner class CoinViewHolder(view: View): RecyclerView.ViewHolder(view) {
-
-        private val coinTextView = view.findViewById<TextView>(R.id.coin_item_name)
+    inner class CoinViewHolder(private val binding: CoinItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(coin: Coin) {
-            coinTextView.text = coin.name
+            binding.coin = coin
         }
 
     }
