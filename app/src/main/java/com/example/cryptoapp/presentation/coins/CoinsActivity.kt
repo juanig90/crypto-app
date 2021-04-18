@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinsBinding
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class CoinsActivity : AppCompatActivity() {
@@ -31,6 +32,15 @@ class CoinsActivity : AppCompatActivity() {
             })
             liveLoading.observe(this@CoinsActivity, { isLoading ->
                 binding.isLoading = isLoading
+            })
+            liveError.observe(this@CoinsActivity, {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    getString(R.string.unknown_error),
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                snackbar.setAction(getString(R.string.retry)) { snackbar.dismiss() }
+                snackbar.show()
             })
             onLoadCoins()
         }

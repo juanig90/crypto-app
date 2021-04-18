@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cryptoapp.presentation.SingleLiveEvent
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import javax.inject.Inject
@@ -18,9 +19,14 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     val liveLoading: LiveData<Boolean>
         get() = mutableLiveLoading
 
+    val liveError: LiveData<Nothing>
+        get() = mutableLiveError
+
     private val mutableLiveCoins = MutableLiveData<List<Coin>>()
 
     private val mutableLiveLoading = MutableLiveData<Boolean>()
+
+    private val mutableLiveError = SingleLiveEvent<Nothing>()
 
     fun onLoadCoins() {
         coinsUseCase.getCoins()
@@ -31,6 +37,7 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
                 mutableLiveCoins.value = coins
             }, {
                 Log.d(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
+                mutableLiveError.call()
             })
     }
 
