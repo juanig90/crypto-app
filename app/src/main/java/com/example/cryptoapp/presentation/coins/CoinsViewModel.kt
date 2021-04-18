@@ -13,7 +13,7 @@ private const val TAG = "CoinsViewModel"
 class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase) : ViewModel() {
 
     val liveCoins: LiveData<List<Coin>>
-    get() = mutableLiveCoins
+        get() = mutableLiveCoins
 
     val liveLoading: LiveData<Boolean>
         get() = mutableLiveLoading
@@ -23,15 +23,15 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     private val mutableLiveLoading = MutableLiveData<Boolean>()
 
     fun onLoadCoins() {
-         coinsUseCase.getCoins()
-             .doOnSubscribe { mutableLiveLoading.value = true }
-             .doOnTerminate { mutableLiveLoading.value = false }
-             .subscribe({ coins ->
-             Log.d(TAG, "onLoadCoins:onSuccessSubscribe $coins")
-             mutableLiveCoins.value = coins
-         }, {
-             Log.d(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
-         })
+        coinsUseCase.getCoins()
+            .doOnSubscribe { mutableLiveLoading.value = true }
+            .doOnTerminate { mutableLiveLoading.value = false }
+            .subscribe({ coins ->
+                Log.d(TAG, "onLoadCoins:onSuccessSubscribe $coins")
+                mutableLiveCoins.value = coins
+            }, {
+                Log.d(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
+            })
     }
 
 }
