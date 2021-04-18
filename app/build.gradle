@@ -62,6 +62,9 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
 
+    //RxAndroid
+    implementation "io.reactivex.rxjava3:rxandroid:$rxjava"
+
     // Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
