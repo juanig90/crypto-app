@@ -25,9 +25,14 @@ class CoinsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
         binding.adapter = coinAdapter
-        viewModel.liveCoins.observe(this, { coins ->
-            coinAdapter.coins = coins
-        })
-        viewModel.onLoadCoins()
+        with(viewModel) {
+            liveCoins.observe(this@CoinsActivity, { coins ->
+                coinAdapter.coins = coins
+            })
+            liveLoading.observe(this@CoinsActivity, { isLoading ->
+                binding.isLoading = isLoading
+            })
+            onLoadCoins()
+        }
     }
 }

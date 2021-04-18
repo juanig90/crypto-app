@@ -15,10 +15,18 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     val liveCoins: LiveData<List<Coin>>
     get() = mutableLiveCoins
 
+    val liveLoading: LiveData<Boolean>
+        get() = mutableLiveLoading
+
     private val mutableLiveCoins = MutableLiveData<List<Coin>>()
 
+    private val mutableLiveLoading = MutableLiveData<Boolean>()
+
     fun onLoadCoins() {
-         coinsUseCase.getCoins().subscribe({ coins ->
+         coinsUseCase.getCoins()
+             .doOnSubscribe { mutableLiveLoading.value = true }
+             .doOnTerminate { mutableLiveLoading.value = false }
+             .subscribe({ coins ->
              Log.d(TAG, "onLoadCoins:onSuccessSubscribe $coins")
              mutableLiveCoins.value = coins
          }, {
