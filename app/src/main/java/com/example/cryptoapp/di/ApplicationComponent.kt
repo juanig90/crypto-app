@@ -1,6 +1,6 @@
 package com.example.cryptoapp.di
 
-import android.app.Application
+import android.content.Context
 import com.example.cryptoapp.ViewModelBuilderModule
 import com.example.cryptoapp.presentation.coins.di.CoinsComponent
 import dagger.BindsInstance
@@ -27,7 +27,7 @@ interface ApplicationComponent {
       fun build(): ApplicationComponent
 
       @BindsInstance
-      fun application(application: Application): Builder
+      fun application(context: Context): Builder
 
   }
 
