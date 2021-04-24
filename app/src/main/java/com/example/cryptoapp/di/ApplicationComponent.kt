@@ -1,7 +1,6 @@
 package com.example.cryptoapp.di
 
 import android.content.Context
-import com.example.cryptoapp.ViewModelBuilderModule
 import com.example.cryptoapp.presentation.coins.di.CoinsComponent
 import dagger.BindsInstance
 import dagger.Component
