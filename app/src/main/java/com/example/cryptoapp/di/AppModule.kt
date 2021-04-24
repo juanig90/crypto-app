@@ -3,14 +3,14 @@ package com.example.cryptoapp.di
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.cryptoapp.data.CoinsDataSource
+import com.example.cryptoapp.data.CoinsRemoteDataSource
 import com.example.cryptoapp.data.CoinsRepositoryImpl
 import com.example.cryptoapp.data.Mapper
 import com.example.cryptoapp.data.MapperImpl
 import com.example.cryptoapp.data.entity.CoinApiResponse
 import com.example.cryptoapp.data.local.AppDatabase
 import com.example.cryptoapp.data.remote.CoinAPI
-import com.example.cryptoapp.data.remote.CoinRemoteDataSource
+import com.example.cryptoapp.data.remote.CoinRemoteDataImpl
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
@@ -33,13 +33,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesDataSource(coinsAPI: CoinAPI): CoinsDataSource {
-        return CoinRemoteDataSource(coinsAPI)
+    fun providesDataSource(coinsAPI: CoinAPI): CoinsRemoteDataSource {
+        return CoinRemoteDataImpl(coinsAPI)
     }
 
     @Singleton
     @Provides
-    fun providesRepository(coinRemoteDataSource: CoinRemoteDataSource,
+    fun providesRepository(coinRemoteDataSource: CoinsRemoteDataSource,
                            mapper: Mapper<Coin, CoinApiResponse>): CoinsRepository {
         return CoinsRepositoryImpl(coinRemoteDataSource, mapper)
     }
