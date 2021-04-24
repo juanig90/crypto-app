@@ -1,7 +1,9 @@
 package com.example.cryptoapp.di
 
+import android.app.Application
 import com.example.cryptoapp.ViewModelBuilderModule
 import com.example.cryptoapp.presentation.coins.di.CoinsComponent
+import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import javax.inject.Singleton
@@ -18,6 +20,17 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
   fun coinsComponent(): CoinsComponent.Factory
+
+  @Component.Builder
+  interface Builder {
+
+      fun build(): ApplicationComponent
+
+      @BindsInstance
+      fun application(application: Application): Builder
+
+  }
+
 }
 
 @Module(subcomponents = [CoinsComponent::class])

@@ -5,6 +5,6 @@ import com.example.cryptoapp.di.DaggerApplicationComponent
 
 class CryptoApp : Application() {
 
-    val application = DaggerApplicationComponent.create()
+    val application = DaggerApplicationComponent.builder().application(this).build()
 
 }
