@@ -1,10 +1,10 @@
 package com.example.cryptoapp.data.local
 
-import com.example.cryptoapp.data.CoinsLocalDataSource
+import com.example.cryptoapp.data.LocalDataSource
 import com.example.cryptoapp.data.entity.CoinLocal
 import io.reactivex.rxjava3.core.Single
 
-class CoinsLocalDataImpl(private val dao: CoinDao): CoinsLocalDataSource {
+class LocalDataSourceImpl(private val dao: CoinDao): LocalDataSource {
 
     override fun getCoins(): Single<List<CoinLocal>> {
         return dao.getAll()
