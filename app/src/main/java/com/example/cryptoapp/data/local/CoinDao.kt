@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.core.Single
 interface CoinDao {
 
     @Query("SELECT * FROM coin")
-    fun getAll(): Single<CoinLocal>
+    fun getAll(): Single<List<CoinLocal>>
 
     @Insert( onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(coins: List<CoinLocal>)
