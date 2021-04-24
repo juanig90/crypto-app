@@ -1,10 +1,14 @@
 package com.example.cryptoapp.di
 
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.example.cryptoapp.data.CoinsDataSource
 import com.example.cryptoapp.data.CoinsRepositoryImpl
 import com.example.cryptoapp.data.Mapper
 import com.example.cryptoapp.data.MapperImpl
 import com.example.cryptoapp.data.entity.CoinApiResponse
+import com.example.cryptoapp.data.local.AppDatabase
 import com.example.cryptoapp.data.remote.CoinAPI
 import com.example.cryptoapp.data.remote.CoinRemoteDataSource
 import com.example.cryptoapp.domain.entity.Coin
@@ -44,6 +48,12 @@ object AppModule {
     @Provides
     fun providesCoinsUseCase(coinsRepository: CoinsRepository): CoinsUseCase {
         return CoinsUseCaseImpl(coinsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun providesDatabase(context: Context): RoomDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "crypto-db").build()
     }
 
 }

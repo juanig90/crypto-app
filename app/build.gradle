@@ -65,6 +65,11 @@ dependencies {
     //RxAndroid
     implementation "io.reactivex.rxjava3:rxandroid:$rxjava"
 
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
     // Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
