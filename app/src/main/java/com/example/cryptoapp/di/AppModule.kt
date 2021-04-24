@@ -52,7 +52,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesDatabase(context: Context): RoomDatabase {
+    fun providesDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "crypto-db").build()
     }
 
