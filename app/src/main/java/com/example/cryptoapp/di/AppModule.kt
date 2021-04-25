@@ -2,13 +2,11 @@ package com.example.cryptoapp.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.cryptoapp.data.RemoteDataSource
-import com.example.cryptoapp.data.CoinsRepositoryImpl
-import com.example.cryptoapp.data.Mapper
-import com.example.cryptoapp.data.MapperImpl
+import com.example.cryptoapp.data.*
 import com.example.cryptoapp.data.entity.CoinApiResponse
 import com.example.cryptoapp.data.local.AppDatabase
+import com.example.cryptoapp.data.local.CoinDao
+import com.example.cryptoapp.data.local.LocalDataSourceImpl
 import com.example.cryptoapp.data.remote.CoinAPI
 import com.example.cryptoapp.data.remote.RemoteDataSourceImpl
 import com.example.cryptoapp.domain.entity.Coin
@@ -33,15 +31,28 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun providesDao(database: AppDatabase): CoinDao {
+        return database.coinDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providesLocalDataSource(dao: CoinDao): LocalDataSource {
+        return LocalDataSourceImpl(dao)
+    }
+
+    @Singleton
+    @Provides
     fun providesDataSource(coinsAPI: CoinAPI): RemoteDataSource {
         return RemoteDataSourceImpl(coinsAPI)
     }
 
     @Singleton
     @Provides
-    fun providesRepository(remoteDataSource: RemoteDataSource,
+    fun providesRepository(localDataSource: LocalDataSource,
+                           remoteDataSource: RemoteDataSource,
                            mapper: Mapper<Coin, CoinApiResponse>): CoinsRepository {
-        return CoinsRepositoryImpl(remoteDataSource, mapper)
+        return CoinsRepositoryImpl(localDataSource, remoteDataSource, mapper)
     }
 
     @Singleton

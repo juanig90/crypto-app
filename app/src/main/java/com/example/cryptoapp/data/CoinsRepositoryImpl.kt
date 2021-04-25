@@ -6,6 +6,7 @@ import com.example.cryptoapp.domain.repository.CoinsRepository
 import io.reactivex.rxjava3.core.Single
 
 class CoinsRepositoryImpl(
+    private val localData: LocalDataSource,
     private val remoteData: RemoteDataSource,
     private val mapper: Mapper<Coin, CoinApiResponse>): CoinsRepository {
 
