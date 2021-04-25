@@ -3,7 +3,7 @@ package com.example.cryptoapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.cryptoapp.data.*
-import com.example.cryptoapp.data.entity.CoinApiResponse
+import com.example.cryptoapp.data.entity.RemoteCoin
 import com.example.cryptoapp.data.local.AppDatabase
 import com.example.cryptoapp.data.local.CoinDao
 import com.example.cryptoapp.data.local.LocalDataSourceImpl
@@ -23,7 +23,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesMapper(): Mapper<Coin, CoinApiResponse> = MapperImpl()
+    fun providesMapper(): Mapper<Coin, RemoteCoin> = MapperImpl()
 
     @Singleton
     @Provides
@@ -51,7 +51,7 @@ object AppModule {
     @Provides
     fun providesRepository(localDataSource: LocalDataSource,
                            remoteDataSource: RemoteDataSource,
-                           mapper: Mapper<Coin, CoinApiResponse>): CoinsRepository {
+                           mapper: Mapper<Coin, RemoteCoin>): CoinsRepository {
         return CoinsRepositoryImpl(localDataSource, remoteDataSource, mapper)
     }
 

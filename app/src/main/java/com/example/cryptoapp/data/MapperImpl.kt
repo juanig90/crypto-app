@@ -1,11 +1,11 @@
 package com.example.cryptoapp.data
 
-import com.example.cryptoapp.data.entity.CoinApiResponse
+import com.example.cryptoapp.data.entity.RemoteCoin
 import com.example.cryptoapp.domain.entity.Coin
 
-class MapperImpl: Mapper<Coin, CoinApiResponse> {
+class MapperImpl: Mapper<Coin, RemoteCoin> {
 
-    override fun fromEntityToDomainModel(entity: CoinApiResponse): Coin {
+    override fun fromEntityToDomainModel(entity: RemoteCoin): Coin {
         return Coin(
             id = entity.id,
             symbol = entity.symbol,
@@ -13,8 +13,8 @@ class MapperImpl: Mapper<Coin, CoinApiResponse> {
         )
     }
 
-    override fun fromDomainModelToEntity(domain: Coin): CoinApiResponse {
-        return CoinApiResponse(
+    override fun fromDomainModelToEntity(domain: Coin): RemoteCoin {
+        return RemoteCoin(
             id = domain.id,
             symbol = domain.symbol,
             name = domain.name
