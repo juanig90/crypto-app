@@ -6,6 +6,6 @@ import io.reactivex.rxjava3.core.Single
 interface LocalDataSource {
 
     fun getCoins(): Single<List<LocalCoin>>
-    fun saveCoins(coins: List<LocalCoin>)
+    fun saveCoins(vararg coins: LocalCoin)
 
 }

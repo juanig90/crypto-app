@@ -14,6 +14,6 @@ interface CoinDao {
     fun getAll(): Single<List<LocalCoin>>
 
     @Insert( onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(coins: List<LocalCoin>)
+    fun insertAll(vararg coins: LocalCoin)
 
 }
