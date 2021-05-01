@@ -14,14 +14,18 @@
         <activity
             android:name=".presentation.home.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.CryptoApp.NoActionBar">
+            android:theme="@style/Theme.CryptoApp.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.coins.CoinsActivity"/>
+        <activity android:name=".presentation.coins.CoinsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
