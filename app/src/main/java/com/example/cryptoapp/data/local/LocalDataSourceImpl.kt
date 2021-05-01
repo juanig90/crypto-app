@@ -14,4 +14,8 @@ class LocalDataSourceImpl @Inject constructor(private val dao: CoinDao): LocalDa
     override fun saveCoins(vararg coins: LocalCoin) {
         dao.insertAll(*coins)
     }
+
+    override fun deleteCoin(coin: LocalCoin) {
+        dao.delete(coin)
+    }
 }

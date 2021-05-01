@@ -7,5 +7,5 @@ interface LocalDataSource {
 
     fun getCoins(): Single<List<LocalCoin>>
     fun saveCoins(vararg coins: LocalCoin)
-
+    fun deleteCoin(coin: LocalCoin)
 }
