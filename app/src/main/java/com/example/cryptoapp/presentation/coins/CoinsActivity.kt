@@ -19,12 +19,13 @@ class CoinsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCoinsBinding
 
-    private val coinAdapter = CoinsAdapter()
+    private lateinit var coinAdapter: CoinsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as CryptoApp).application.coinsComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
+        coinAdapter = CoinsAdapter(viewModel)
         binding.adapter = coinAdapter
         with(viewModel) {
             liveCoins.observe(this@CoinsActivity, { coins ->

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.CoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
 
-class CoinsAdapter: RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
+class CoinsAdapter(private val vm: CoinsViewModel): RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
 
     var coins: List<Coin> = listOf()
         set(value) {
@@ -28,7 +28,12 @@ class CoinsAdapter: RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
     inner class CoinViewHolder(private val binding: CoinItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(coin: Coin) {
-            binding.coin = coin
+            binding.run {
+                this.coin = coin
+                coinItemSwitch.setOnCheckedChangeListener { _, isChecked ->
+                    vm.onSwitchChanged(coin, isChecked)
+                }
+            }
         }
 
     }

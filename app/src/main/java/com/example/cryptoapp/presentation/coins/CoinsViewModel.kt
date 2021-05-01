@@ -41,4 +41,6 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
             })
     }
 
+    fun onSwitchChanged(coin: Coin, value: Boolean) {}
+
 }
