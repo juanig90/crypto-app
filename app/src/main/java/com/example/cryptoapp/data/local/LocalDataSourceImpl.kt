@@ -2,6 +2,7 @@ package com.example.cryptoapp.data.local
 
 import com.example.cryptoapp.data.LocalDataSource
 import com.example.cryptoapp.data.entity.LocalCoin
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
@@ -11,11 +12,11 @@ class LocalDataSourceImpl @Inject constructor(private val dao: CoinDao): LocalDa
         return dao.getAll()
     }
 
-    override fun saveCoins(vararg coins: LocalCoin) {
-        dao.insertAll(*coins)
+    override fun saveCoins(vararg coins: LocalCoin): Completable {
+        return dao.insertAll(*coins)
     }
 
-    override fun deleteCoin(coin: LocalCoin) {
-        dao.delete(coin)
+    override fun deleteCoin(coin: LocalCoin): Completable {
+        return dao.delete(coin)
     }
 }
