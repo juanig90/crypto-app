@@ -2,6 +2,7 @@ package com.example.cryptoapp.data.local
 
 import androidx.room.*
 import com.example.cryptoapp.data.entity.LocalCoin
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 @Dao
@@ -11,9 +12,9 @@ interface CoinDao {
     fun getAll(): Single<List<LocalCoin>>
 
     @Insert( onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg coins: LocalCoin)
+    fun insertAll(vararg coins: LocalCoin): Completable
 
     @Delete
-    fun delete(coin: LocalCoin)
+    fun delete(coin: LocalCoin): Completable
 
 }
