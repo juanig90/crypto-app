@@ -41,6 +41,19 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
             })
     }
 
-    fun onSwitchChanged(coin: Coin, value: Boolean) {}
+    fun onSwitchChanged(coin: Coin, value: Boolean) {
+        if (value)
+            coinsUseCase.saveCoin(coin).subscribe({
+                Log.d(TAG, "onSwitchChanged save successfully")
+            }, {
+                Log.d(TAG, "onSwitchChanged save error ${it.localizedMessage}")
+            })
+        else
+            coinsUseCase.deleteCoin(coin).subscribe({
+                Log.d(TAG, "onSwitchChanged delete successfully")
+            }, {
+                Log.d(TAG, "onSwitchChanged delete error ${it.localizedMessage}")
+            })
+    }
 
 }
