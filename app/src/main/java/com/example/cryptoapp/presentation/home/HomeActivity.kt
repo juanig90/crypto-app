@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityHomeBinding
+import com.example.cryptoapp.presentation.CoinsAdapter
 import com.example.cryptoapp.presentation.CoinsViewModel
 import javax.inject.Inject
 
@@ -22,10 +23,14 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
+    private lateinit var adapter: CoinsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as CryptoApp).application.homeComponent().create().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        adapter = CoinsAdapter(viewModel)
+        binding.adapter = adapter
         setSupportActionBar(findViewById(R.id.toolbar))
     }
 
