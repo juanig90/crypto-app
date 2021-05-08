@@ -1,11 +1,12 @@
-package com.example.cryptoapp.presentation.coins
+package com.example.cryptoapp.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.CoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
-import com.example.cryptoapp.presentation.coins.CoinsAdapter.Style.*
+import com.example.cryptoapp.presentation.CoinsAdapter.Style.*
+import com.example.cryptoapp.presentation.coins.CoinsViewModel
 
 class CoinsAdapter(private val vm: CoinsViewModel,
                    private val style: Style = COMMON): RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="adapter"
-            type="com.example.cryptoapp.presentation.coins.CoinsAdapter" />
+            type="com.example.cryptoapp.presentation.CoinsAdapter" />
 
         <variable
             name="isLoading"

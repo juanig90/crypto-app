@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinsBinding
+import com.example.cryptoapp.presentation.CoinsAdapter
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
