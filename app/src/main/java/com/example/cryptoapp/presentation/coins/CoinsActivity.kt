@@ -40,8 +40,10 @@ class CoinsActivity : AppCompatActivity() {
                     getString(R.string.unknown_error),
                     Snackbar.LENGTH_INDEFINITE
                 )
-                snackbar.setAction(getString(R.string.retry)) { snackbar.dismiss() }
-                snackbar.show()
+                snackbar.run {
+                    setAction(getString(R.string.retry)) { dismiss() }
+                    show()
+                }
             })
             onLoadCoins()
         }
