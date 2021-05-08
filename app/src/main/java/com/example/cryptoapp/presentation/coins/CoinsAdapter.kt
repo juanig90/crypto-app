@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.CoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
+import com.example.cryptoapp.presentation.coins.CoinsAdapter.Style.*
 
-class CoinsAdapter(private val vm: CoinsViewModel): RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
+class CoinsAdapter(private val vm: CoinsViewModel,
+                   private val style: Style = COMMON): RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
 
     var coins: List<Coin> = listOf()
         set(value) {
@@ -37,4 +39,9 @@ class CoinsAdapter(private val vm: CoinsViewModel): RecyclerView.Adapter<CoinsAd
         }
 
     }
+
+    enum class Style {
+        CARD, COMMON
+    }
+
 }
