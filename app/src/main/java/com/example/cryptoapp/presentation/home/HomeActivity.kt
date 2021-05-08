@@ -32,6 +32,10 @@ class HomeActivity : AppCompatActivity() {
         adapter = CoinsAdapter(viewModel)
         binding.adapter = adapter
         setSupportActionBar(findViewById(R.id.toolbar))
+        viewModel.liveCoins.observe(this, { coins ->
+            adapter.coins = coins
+        })
+        viewModel.onLoadCoins()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
