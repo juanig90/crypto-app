@@ -9,6 +9,7 @@ import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinsBinding
 import com.example.cryptoapp.presentation.CoinsAdapter
+import com.example.cryptoapp.presentation.CoinsViewModel
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
