@@ -4,12 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.databinding.DataBindingUtil
 import com.example.cryptoapp.R
+import com.example.cryptoapp.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         setContentView(R.layout.activity_home)
         setSupportActionBar(findViewById(R.id.toolbar))
     }
