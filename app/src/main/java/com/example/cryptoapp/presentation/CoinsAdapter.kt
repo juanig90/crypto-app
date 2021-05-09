@@ -7,11 +7,11 @@ import com.example.cryptoapp.databinding.CoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
 
 class CoinsAdapter(private val vm: CoinsViewModel,
-                   private var coinUI: CoinUI): RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
+                   private var coinUI: CoinUI): RecyclerView.Adapter<CoinViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
         val binding = CoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CoinViewHolder(binding)
+        return DefaultCoinViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
@@ -25,9 +25,9 @@ class CoinsAdapter(private val vm: CoinsViewModel,
         notifyDataSetChanged()
     }
 
-    inner class CoinViewHolder(private val binding: CoinItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class DefaultCoinViewHolder(private val binding: CoinItemBinding): CoinViewHolder(binding.root) {
 
-        fun bind(coin: Coin) {
+        override fun bind(coin: Coin) {
             binding.run {
                 this.coin = coin
                 coinItemSwitch.setOnCheckedChangeListener { _, isChecked ->
