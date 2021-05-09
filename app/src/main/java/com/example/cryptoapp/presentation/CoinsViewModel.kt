@@ -27,8 +27,8 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
 
     private val mutableLiveError = MutableLiveData<Boolean>()
 
-    fun onLoadCoins() {
-        coinsUseCase.getCoins()
+    fun onLoadCoins(local: Boolean = false) {
+        coinsUseCase.getCoins(local)
             .doOnSubscribe { mutableLiveLoading.value = true }
             .doOnTerminate { mutableLiveLoading.value = false }
             .subscribe({ coins ->

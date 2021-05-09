@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.liveCoins.observe(this, { coins ->
             adapter.coins = coins
         })
-        viewModel.onLoadCoins()
+        viewModel.onLoadCoins(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
