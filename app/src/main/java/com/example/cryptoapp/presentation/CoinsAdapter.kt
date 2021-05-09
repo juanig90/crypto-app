@@ -26,6 +26,10 @@ class CoinsAdapter(private val vm: CoinsViewModel,
         notifyDataSetChanged()
     }
 
+    private enum class ViewTypes(val value: Int) {
+        DEFAULT(0), CARD(1)
+    }
+
     inner class DefaultCoinViewHolder(private val binding: CoinItemBinding): CoinViewHolder(binding.root) {
 
         override fun bind(coin: Coin) {
