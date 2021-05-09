@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsRepository) : CoinsUseCase {
 
-    override fun getCoins(): Single<List<Coin>> {
-        return repository.getCoins()
+    override fun getCoins(local: Boolean): Single<List<Coin>> {
+        return repository.getCoins(local)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface CoinsUseCase {
 
-    fun getCoins(): Single<List<Coin>>
+    fun getCoins(local: Boolean = false): Single<List<Coin>>
     fun saveCoin(coin: Coin): Completable
     fun deleteCoin(coin: Coin): Completable
 }
