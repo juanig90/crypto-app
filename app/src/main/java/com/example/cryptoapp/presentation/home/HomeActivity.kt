@@ -33,10 +33,12 @@ class HomeActivity : AppCompatActivity() {
         (application as CryptoApp).application.homeComponent().create().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         coinsAdapter = CoinsAdapter(viewModel, CardUI(listOf()))
-        binding.adapter = coinsAdapter
-        binding.activityHomeRecycler.run {
-            layoutManager = GridLayoutManager(this@HomeActivity, 2)
-            addItemDecoration(GridItemDecoration())
+        with(binding) {
+            adapter = coinsAdapter
+            activityHomeRecycler.run {
+                layoutManager = GridLayoutManager(this@HomeActivity, 2)
+                addItemDecoration(GridItemDecoration())
+            }
         }
         setSupportActionBar(findViewById(R.id.toolbar))
         viewModel.liveCoins.observe(this, { coins ->
