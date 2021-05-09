@@ -15,6 +15,7 @@ import com.example.cryptoapp.presentation.CoinsAdapter
 import com.example.cryptoapp.presentation.CoinsAdapter.CoinUI.CardUI
 import com.example.cryptoapp.presentation.CoinsViewModel
 import com.example.cryptoapp.presentation.GridItemDecoration
+import com.example.cryptoapp.presentation.coins.CoinsActivity
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -38,6 +39,9 @@ class HomeActivity : AppCompatActivity() {
             activityHomeRecycler.run {
                 layoutManager = GridLayoutManager(this@HomeActivity, 2)
                 addItemDecoration(GridItemDecoration())
+            }
+            activityHomeFloatingButton.setOnClickListener {
+                CoinsActivity.startActivity(this@HomeActivity)
             }
         }
         setSupportActionBar(findViewById(R.id.toolbar))
