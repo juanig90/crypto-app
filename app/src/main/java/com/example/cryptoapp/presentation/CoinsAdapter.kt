@@ -38,4 +38,11 @@ class CoinsAdapter(private val vm: CoinsViewModel): RecyclerView.Adapter<CoinsAd
 
     }
 
+
+    sealed class CoinUI(val coins: List<Coin>) {
+
+        class CardUI(coins: List<Coin>) : CoinUI(coins)
+        class DefaultUI(coins: List<Coin>) : CoinUI(coins)
+    }
+
 }
