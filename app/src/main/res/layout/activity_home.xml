@@ -42,7 +42,6 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_home_appbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:adapter="@{adapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/coin_item"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -7,12 +7,14 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityHomeBinding
 import com.example.cryptoapp.presentation.CoinsAdapter
 import com.example.cryptoapp.presentation.CoinsAdapter.CoinUI.CardUI
 import com.example.cryptoapp.presentation.CoinsViewModel
+import com.example.cryptoapp.presentation.GridItemDecoration
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -32,6 +34,10 @@ class HomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         adapter = CoinsAdapter(viewModel, CardUI(listOf()))
         binding.adapter = adapter
+        binding.activityHomeRecycler.run {
+            layoutManager = GridLayoutManager(this@HomeActivity, 2)
+            addItemDecoration(GridItemDecoration())
+        }
         setSupportActionBar(findViewById(R.id.toolbar))
         viewModel.liveCoins.observe(this, { coins ->
             adapter.setData(CardUI(coins))
