@@ -1,5 +1,7 @@
 package com.example.cryptoapp.presentation.coins
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -51,4 +53,15 @@ class CoinsActivity : AppCompatActivity() {
             onLoadCoins()
         }
     }
+
+    companion object {
+
+        fun startActivity(context: Activity) {
+            Intent(context, CoinsActivity::class.java).apply {
+                context.startActivity(this)
+            }
+        }
+    }
+
+
 }
