@@ -3,6 +3,7 @@ package com.example.cryptoapp.presentation
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cryptoapp.databinding.CardCoinItemBinding
 import com.example.cryptoapp.databinding.CoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
 
@@ -38,6 +39,12 @@ class CoinsAdapter(private val vm: CoinsViewModel,
 
     }
 
+    inner class CardCoinViewHolder(private val binding: CardCoinItemBinding): CoinViewHolder(binding.root) {
+
+        override fun bind(coin: Coin) {
+            binding.coin = coin
+        }
+    }
 
     sealed class CoinUI(val coins: List<Coin>) {
 
