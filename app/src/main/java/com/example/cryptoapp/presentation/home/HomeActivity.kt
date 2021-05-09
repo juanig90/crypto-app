@@ -26,21 +26,21 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
-    private lateinit var adapter: CoinsAdapter
+    private lateinit var coinsAdapter: CoinsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as CryptoApp).application.homeComponent().create().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        adapter = CoinsAdapter(viewModel, CardUI(listOf()))
-        binding.adapter = adapter
+        coinsAdapter = CoinsAdapter(viewModel, CardUI(listOf()))
+        binding.adapter = coinsAdapter
         binding.activityHomeRecycler.run {
             layoutManager = GridLayoutManager(this@HomeActivity, 2)
             addItemDecoration(GridItemDecoration())
         }
         setSupportActionBar(findViewById(R.id.toolbar))
         viewModel.liveCoins.observe(this, { coins ->
-            adapter.setData(CardUI(coins))
+            coinsAdapter.setData(CardUI(coins))
         })
         viewModel.onLoadCoins(true)
     }
