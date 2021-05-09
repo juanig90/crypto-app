@@ -12,12 +12,23 @@ class CoinsRepositoryImpl(
     private val remoteData: RemoteDataSource,
     private val mapper: Mapper<Coin, RemoteCoin>): CoinsRepository {
 
-    override fun getCoins(): Single<List<Coin>> {
-        return remoteData.getCoins().map { coins ->
-            coins.map { coin ->
-                mapper.fromEntityToDomainModel(coin)
+    override fun getCoins(local: Boolean): Single<List<Coin>> {
+        if (local)
+            return localData.getCoins().map { coins ->
+                coins.map { localCoin ->
+                    Coin(
+                        id = localCoin.id,
+                        symbol = localCoin.symbol,
+                        name = localCoin.name
+                    )
+                }
             }
-        }
+        else
+            return remoteData.getCoins().map { coins ->
+                coins.map { coin ->
+                    mapper.fromEntityToDomainModel(coin)
+                }
+            }
     }
 
     override fun saveCoin(coin: Coin): Completable {
