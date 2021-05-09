@@ -11,8 +11,16 @@ class CoinsAdapter(private val vm: CoinsViewModel,
                    private var coinUI: CoinUI): RecyclerView.Adapter<CoinViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
-        val binding = CoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return DefaultCoinViewHolder(binding)
+        return when (viewType) {
+            ViewTypes.CARD.value -> {
+                val binding = CardCoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                CardCoinViewHolder(binding)
+            }
+            else -> {
+                val binding = CoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                DefaultCoinViewHolder(binding)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
@@ -20,6 +28,13 @@ class CoinsAdapter(private val vm: CoinsViewModel,
     }
 
     override fun getItemCount() = coinUI.coins.size
+
+    override fun getItemViewType(position: Int): Int {
+        return when (coinUI) {
+            is CoinUI.DefaultUI -> ViewTypes.DEFAULT.value
+            is CoinUI.CardUI -> ViewTypes.CARD.value
+        }
+    }
 
     fun setData(coinUI: CoinUI) {
         this.coinUI = coinUI
