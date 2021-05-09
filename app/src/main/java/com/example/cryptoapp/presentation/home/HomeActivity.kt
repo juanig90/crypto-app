@@ -48,6 +48,10 @@ class HomeActivity : AppCompatActivity() {
         viewModel.liveCoins.observe(this, { coins ->
             coinsAdapter.setData(CardUI(coins))
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.onLoadCoins(true)
     }
 
