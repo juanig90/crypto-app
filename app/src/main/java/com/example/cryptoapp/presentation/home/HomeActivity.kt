@@ -11,6 +11,7 @@ import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityHomeBinding
 import com.example.cryptoapp.presentation.CoinsAdapter
+import com.example.cryptoapp.presentation.CoinsAdapter.CoinUI.CardUI
 import com.example.cryptoapp.presentation.CoinsViewModel
 import javax.inject.Inject
 
@@ -29,11 +30,11 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (application as CryptoApp).application.homeComponent().create().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        adapter = CoinsAdapter(viewModel)
+        adapter = CoinsAdapter(viewModel, CardUI(listOf()))
         binding.adapter = adapter
         setSupportActionBar(findViewById(R.id.toolbar))
         viewModel.liveCoins.observe(this, { coins ->
-            adapter.coins = coins
+            adapter.setData(CardUI(coins))
         })
         viewModel.onLoadCoins(true)
     }

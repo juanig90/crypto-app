@@ -9,6 +9,7 @@ import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinsBinding
 import com.example.cryptoapp.presentation.CoinsAdapter
+import com.example.cryptoapp.presentation.CoinsAdapter.CoinUI.DefaultUI
 import com.example.cryptoapp.presentation.CoinsViewModel
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
@@ -27,11 +28,11 @@ class CoinsActivity : AppCompatActivity() {
         (application as CryptoApp).application.coinsComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
-        coinAdapter = CoinsAdapter(viewModel)
+        coinAdapter = CoinsAdapter(viewModel, DefaultUI(listOf()))
         binding.adapter = coinAdapter
         with(viewModel) {
             liveCoins.observe(this@CoinsActivity, { coins ->
-                coinAdapter.coins = coins
+                coinAdapter.setData(DefaultUI(coins))
             })
             liveLoading.observe(this@CoinsActivity, { isLoading ->
                 binding.isLoading = isLoading

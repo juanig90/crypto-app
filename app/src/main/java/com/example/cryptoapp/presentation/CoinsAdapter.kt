@@ -6,13 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.CoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
 
-class CoinsAdapter(private val vm: CoinsViewModel): RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
-
-    var coins: List<Coin> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class CoinsAdapter(private val vm: CoinsViewModel,
+                   private var coinUI: CoinUI): RecyclerView.Adapter<CoinsAdapter.CoinViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
         val binding = CoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,10 +15,15 @@ class CoinsAdapter(private val vm: CoinsViewModel): RecyclerView.Adapter<CoinsAd
     }
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
-        holder.bind(coins[position])
+        holder.bind(coinUI.coins[position])
     }
 
-    override fun getItemCount() = coins.size
+    override fun getItemCount() = coinUI.coins.size
+
+    fun setData(coinUI: CoinUI) {
+        this.coinUI = coinUI
+        notifyDataSetChanged()
+    }
 
     inner class CoinViewHolder(private val binding: CoinItemBinding): RecyclerView.ViewHolder(binding.root) {
 
