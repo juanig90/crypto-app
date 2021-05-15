@@ -1,10 +1,10 @@
 package com.example.cryptoapp.presentation.home
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,7 +12,6 @@ import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityHomeBinding
 import com.example.cryptoapp.presentation.CoinsAdapter
-import com.example.cryptoapp.presentation.CoinsAdapter.CoinUI.CardUI
 import com.example.cryptoapp.presentation.CoinsViewModel
 import com.example.cryptoapp.presentation.GridItemDecoration
 import com.example.cryptoapp.presentation.coins.CoinsActivity
@@ -39,8 +38,8 @@ class HomeActivity : AppCompatActivity() {
             activityHomeFloatingButton.setOnClickListener {
                 CoinsActivity.startActivity(this@HomeActivity)
             }
-            viewModel.liveCoins.observe(this@HomeActivity, { coins ->
-                activityHomeRecycler.adapter = CoinsAdapter(viewModel, CardUI(coins))
+            viewModel.liveCoins.observe(this@HomeActivity, { coinUI ->
+                activityHomeRecycler.adapter = CoinsAdapter(viewModel, coinUI)
             })
         }
         setSupportActionBar(findViewById(R.id.toolbar))

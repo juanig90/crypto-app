@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.CardCoinItemBinding
 import com.example.cryptoapp.databinding.SwitchCoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
+import com.example.cryptoapp.presentation.CoinsViewModel.CoinUI
 
 class CoinsAdapter(private val vm: CoinsViewModel,
                    private val coinUI: CoinUI): RecyclerView.Adapter<CoinViewHolder>() {
@@ -60,10 +61,5 @@ class CoinsAdapter(private val vm: CoinsViewModel,
         }
     }
 
-    sealed class CoinUI(val coins: List<Coin>) {
-
-        class CardUI(coins: List<Coin>) : CoinUI(coins)
-        class SwitchUI(coins: List<Coin>) : CoinUI(coins)
-    }
 
 }

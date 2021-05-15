@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
+import com.example.cryptoapp.presentation.CoinsViewModel.CoinUI.*
 import javax.inject.Inject
 
 private const val TAG = "CoinsViewModel"
 
 class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase) : ViewModel() {
 
-    val liveCoins: LiveData<List<Coin>>
+    val liveCoins: LiveData<CoinUI>
         get() = mutableLiveCoins
 
     val liveLoading: LiveData<Boolean>
@@ -21,7 +22,7 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     val liveError: LiveData<Boolean>
         get() = mutableLiveError
 
-    private val mutableLiveCoins = MutableLiveData<List<Coin>>()
+    private val mutableLiveCoins = MutableLiveData<CoinUI>()
 
     private val mutableLiveLoading = MutableLiveData<Boolean>()
 
@@ -33,7 +34,10 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
             .doOnTerminate { mutableLiveLoading.value = false }
             .subscribe({ coins ->
                 Log.d(TAG, "onLoadCoins:onSuccessSubscribe $coins")
-                mutableLiveCoins.value = coins
+                if(local)
+                    mutableLiveCoins.value = CardUI(coins)
+                else
+                    mutableLiveCoins.value = SwitchUI(coins)
             }, {
                 Log.d(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
                 mutableLiveError.value = true
@@ -53,6 +57,12 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
             }, {
                 Log.d(TAG, "onSwitchChanged delete error ${it.localizedMessage}")
             })
+    }
+
+    sealed class CoinUI(val coins: List<Coin>) {
+
+        class CardUI(coins: List<Coin>) : CoinUI(coins)
+        class SwitchUI(coins: List<Coin>) : CoinUI(coins)
     }
 
 }
