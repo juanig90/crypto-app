@@ -23,10 +23,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesMapper(): Mapper<Coin, RemoteCoin> = MapperImpl()
-
-    @Singleton
-    @Provides
     fun providesCoinsApi(retrofit: Retrofit): CoinAPI = retrofit.create(CoinAPI::class.java)
 
     @Singleton
@@ -50,9 +46,8 @@ object AppModule {
     @Singleton
     @Provides
     fun providesRepository(localDataSource: LocalDataSource,
-                           remoteDataSource: RemoteDataSource,
-                           mapper: Mapper<Coin, RemoteCoin>): CoinsRepository {
-        return CoinsRepositoryImpl(localDataSource, remoteDataSource, mapper)
+                           remoteDataSource: RemoteDataSource): CoinsRepository {
+        return CoinsRepositoryImpl(localDataSource, remoteDataSource)
     }
 
     @Singleton

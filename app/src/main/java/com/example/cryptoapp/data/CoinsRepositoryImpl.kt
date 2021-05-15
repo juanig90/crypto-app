@@ -9,8 +9,7 @@ import io.reactivex.rxjava3.core.Single
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
-    private val remoteData: RemoteDataSource,
-    private val mapper: Mapper<Coin, RemoteCoin>): CoinsRepository {
+    private val remoteData: RemoteDataSource): CoinsRepository {
 
     override fun getCoins(local: Boolean): Single<List<Coin>> {
         if (local)
@@ -26,7 +25,11 @@ class CoinsRepositoryImpl(
         else
             return remoteData.getCoins().map { coins ->
                 coins.map { coin ->
-                    mapper.fromEntityToDomainModel(coin)
+                    Coin(
+                        id = coin.id,
+                        symbol = coin.symbol,
+                        name = coin.name
+                    )
                 }
             }
     }
