@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.CardCoinItemBinding
-import com.example.cryptoapp.databinding.CoinItemBinding
+import com.example.cryptoapp.databinding.SwitchCoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
 
 class CoinsAdapter(private val vm: CoinsViewModel,
@@ -17,8 +17,8 @@ class CoinsAdapter(private val vm: CoinsViewModel,
                 CardCoinViewHolder(binding)
             }
             else -> {
-                val binding = CoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                DefaultCoinViewHolder(binding)
+                val binding = SwitchCoinItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                SwitchCoinViewHolder(binding)
             }
         }
     }
@@ -31,7 +31,7 @@ class CoinsAdapter(private val vm: CoinsViewModel,
 
     override fun getItemViewType(position: Int): Int {
         return when (coinUI) {
-            is CoinUI.DefaultUI -> ViewTypes.DEFAULT.value
+            is CoinUI.DefaultUI -> ViewTypes.SWITCH.value
             is CoinUI.CardUI -> ViewTypes.CARD.value
         }
     }
@@ -42,10 +42,10 @@ class CoinsAdapter(private val vm: CoinsViewModel,
     }
 
     private enum class ViewTypes(val value: Int) {
-        DEFAULT(0), CARD(1)
+        SWITCH(0), CARD(1)
     }
 
-    inner class DefaultCoinViewHolder(private val binding: CoinItemBinding): CoinViewHolder(binding.root) {
+    inner class SwitchCoinViewHolder(private val binding: SwitchCoinItemBinding): CoinViewHolder(binding.root) {
 
         override fun bind(coin: Coin) {
             binding.run {

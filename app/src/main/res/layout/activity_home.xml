@@ -42,7 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_home_appbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:adapter="@{adapter}"
-            tools:listitem="@layout/coin_item"/>
+            tools:listitem="@layout/switch_coin_item"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_home_floating_button"
