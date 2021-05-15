@@ -47,6 +47,7 @@ class CoinsAdapter(private val vm: CoinsViewModel,
             binding.run {
                 this.coin = coin
                 coinItemSwitch.setOnCheckedChangeListener { _, isChecked ->
+                    coin.isFavorite = isChecked
                     vm.onSwitchChanged(coin, isChecked)
                 }
             }
