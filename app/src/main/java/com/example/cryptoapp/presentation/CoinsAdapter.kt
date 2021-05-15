@@ -31,7 +31,7 @@ class CoinsAdapter(private val vm: CoinsViewModel,
 
     override fun getItemViewType(position: Int): Int {
         return when (coinUI) {
-            is CoinUI.DefaultUI -> ViewTypes.SWITCH.value
+            is CoinUI.SwitchUI -> ViewTypes.SWITCH.value
             is CoinUI.CardUI -> ViewTypes.CARD.value
         }
     }
@@ -68,7 +68,7 @@ class CoinsAdapter(private val vm: CoinsViewModel,
     sealed class CoinUI(val coins: List<Coin>) {
 
         class CardUI(coins: List<Coin>) : CoinUI(coins)
-        class DefaultUI(coins: List<Coin>) : CoinUI(coins)
+        class SwitchUI(coins: List<Coin>) : CoinUI(coins)
     }
 
 }
