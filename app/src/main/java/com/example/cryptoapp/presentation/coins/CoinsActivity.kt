@@ -24,17 +24,13 @@ class CoinsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCoinsBinding
 
-    private lateinit var coinAdapter: CoinsAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as CryptoApp).application.coinsComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
-        coinAdapter = CoinsAdapter(viewModel, SwitchUI(listOf()))
-        binding.adapter = coinAdapter
         with(viewModel) {
             liveCoins.observe(this@CoinsActivity, { coins ->
-                coinAdapter.setData(SwitchUI(coins))
+                binding.activityCoinsRecycler.adapter = CoinsAdapter(this, SwitchUI(coins))
             })
             liveLoading.observe(this@CoinsActivity, { isLoading ->
                 binding.isLoading = isLoading

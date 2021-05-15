@@ -27,15 +27,11 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
-    private lateinit var coinsAdapter: CoinsAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as CryptoApp).application.homeComponent().create().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        coinsAdapter = CoinsAdapter(viewModel, CardUI(listOf()))
         with(binding) {
-            adapter = coinsAdapter
             activityHomeRecycler.run {
                 layoutManager = GridLayoutManager(this@HomeActivity, 2)
                 addItemDecoration(GridItemDecoration())
@@ -43,11 +39,11 @@ class HomeActivity : AppCompatActivity() {
             activityHomeFloatingButton.setOnClickListener {
                 CoinsActivity.startActivity(this@HomeActivity)
             }
+            viewModel.liveCoins.observe(this@HomeActivity, { coins ->
+                activityHomeRecycler.adapter = CoinsAdapter(viewModel, CardUI(coins))
+            })
         }
         setSupportActionBar(findViewById(R.id.toolbar))
-        viewModel.liveCoins.observe(this, { coins ->
-            coinsAdapter.setData(CardUI(coins))
-        })
     }
 
     override fun onResume() {

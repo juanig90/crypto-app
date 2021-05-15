@@ -8,7 +8,7 @@ import com.example.cryptoapp.databinding.SwitchCoinItemBinding
 import com.example.cryptoapp.domain.entity.Coin
 
 class CoinsAdapter(private val vm: CoinsViewModel,
-                   private var coinUI: CoinUI): RecyclerView.Adapter<CoinViewHolder>() {
+                   private val coinUI: CoinUI): RecyclerView.Adapter<CoinViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
         return when (viewType) {
@@ -34,11 +34,6 @@ class CoinsAdapter(private val vm: CoinsViewModel,
             is CoinUI.SwitchUI -> ViewTypes.SWITCH.value
             is CoinUI.CardUI -> ViewTypes.CARD.value
         }
-    }
-
-    fun setData(coinUI: CoinUI) {
-        this.coinUI = coinUI
-        notifyDataSetChanged()
     }
 
     private enum class ViewTypes(val value: Int) {
