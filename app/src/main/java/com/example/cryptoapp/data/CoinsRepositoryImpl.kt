@@ -13,7 +13,13 @@ class CoinsRepositoryImpl(
     private val remoteData: RemoteDataSource): CoinsRepository {
 
     override fun getCoins(local: Boolean): Single<List<Coin>> {
-        return if (local) getLocalCoins() else getRemoteCoins()
+        return getAllCoins()
+    }
+
+    private fun getAllCoins(): @NonNull Single<List<Coin>> {
+        return Single.zip(getLocalCoins(), getRemoteCoins()) { local, remote ->
+            (local + remote).distinctBy { coin -> coin.id }
+        }
     }
 
     private fun getRemoteCoins(): @NonNull Single<List<Coin>> {
@@ -34,7 +40,8 @@ class CoinsRepositoryImpl(
                 Coin(
                     id = localCoin.id,
                     symbol = localCoin.symbol,
-                    name = localCoin.name
+                    name = localCoin.name,
+                    isFavorite = true
                 )
             }
         }
