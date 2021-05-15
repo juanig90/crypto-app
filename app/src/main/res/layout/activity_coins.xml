@@ -4,10 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="adapter"
-            type="com.example.cryptoapp.presentation.CoinsAdapter" />
-
-        <variable
             name="isLoading"
             type="Boolean" />
     </data>
@@ -29,7 +25,6 @@
         android:id="@+id/activity_coins_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:adapter="@{adapter}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/switch_coin_item"/>
 

@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="adapter"
-            type="com.example.cryptoapp.presentation.CoinsAdapter" />
-
-        <variable
             name="isLoading"
             type="Boolean" />
     </data>
@@ -41,7 +37,6 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/activity_home_appbar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:adapter="@{adapter}"
             tools:listitem="@layout/switch_coin_item"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
