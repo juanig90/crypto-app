@@ -41,7 +41,7 @@ class CoinsActivity : AppCompatActivity() {
                     Snackbar.LENGTH_INDEFINITE
                 )
                 snackbar.run {
-                    setAction(getString(R.string.retry)) { dismiss() }
+                    setAction(getString(R.string.retry)) { viewModel.onLoadCoins() }
                     show()
                 }
             })
