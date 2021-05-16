@@ -29,6 +29,7 @@ class CoinsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
         binding.activityCoinsRecycler.addItemDecoration(DividerItemDecoration(baseContext, DividerItemDecoration.VERTICAL))
+        setSupportActionBar(binding.activityCoinToolbar)
         with(viewModel) {
             liveCoins.observe(this@CoinsActivity, { coinUI ->
                 binding.activityCoinsRecycler.adapter = CoinsAdapter(this, coinUI)

@@ -7,15 +7,33 @@
             name="isLoading"
             type="Boolean" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.coins.CoinsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_coin_appbar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activity_coin_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="4dp"
+            app:title="@string/coins"
+            app:titleTextColor="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/Theme.CryptoApp.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:visibility="@{isLoading}"
+        android:layout_gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/switch_coin_item"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

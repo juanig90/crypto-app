@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.coins.CoinsActivity"
+            android:theme="@style/Theme.CryptoApp.NoActionBar"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
     </application>
