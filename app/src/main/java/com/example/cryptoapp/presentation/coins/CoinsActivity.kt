@@ -3,6 +3,7 @@ package com.example.cryptoapp.presentation.coins
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -30,6 +31,7 @@ class CoinsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
         binding.activityCoinsRecycler.addItemDecoration(DividerItemDecoration(baseContext, DividerItemDecoration.VERTICAL))
         setSupportActionBar(binding.activityCoinToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         with(viewModel) {
             liveCoins.observe(this@CoinsActivity, { coinUI ->
                 binding.activityCoinsRecycler.adapter = CoinsAdapter(this, coinUI)
@@ -50,6 +52,13 @@ class CoinsActivity : AppCompatActivity() {
             })
             onLoadCoins()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            false
+        } else super.onOptionsItemSelected(item)
     }
 
     companion object {

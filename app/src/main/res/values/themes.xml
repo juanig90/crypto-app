@@ -22,4 +22,9 @@
     <style name="Theme.CryptoApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CryptoApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.CryptoApp.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar" >
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
 </resources>
