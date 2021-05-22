@@ -42,7 +42,6 @@ class HomeActivity : AppCompatActivity() {
                 activityHomeRecycler.adapter = CoinsAdapter(viewModel, coinUI)
             })
         }
-        setSupportActionBar(findViewById(R.id.toolbar))
     }
 
     override fun onResume() {
