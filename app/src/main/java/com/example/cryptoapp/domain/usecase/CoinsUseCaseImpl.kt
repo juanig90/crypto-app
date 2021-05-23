@@ -1,6 +1,7 @@
 package com.example.cryptoapp.domain.usecase
 
 import com.example.cryptoapp.domain.entity.Coin
+import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
@@ -14,6 +15,10 @@ class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsReposito
         return repository.getCoins(local)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getCoinDetail(id: String): Single<CoinDetail> {
+        return repository.getCoinDetail(id)
     }
 
     override fun saveCoin(coin: Coin): Completable {

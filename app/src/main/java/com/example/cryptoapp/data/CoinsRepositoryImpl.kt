@@ -2,6 +2,7 @@ package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
 import com.example.cryptoapp.domain.entity.Coin
+import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Completable
@@ -13,6 +14,10 @@ class CoinsRepositoryImpl(
 
     override fun getCoins(local: Boolean): Single<List<Coin>> {
         return if(local) getLocalCoins() else getAllCoins()
+    }
+
+    override fun getCoinDetail(id: String): Single<CoinDetail> {
+       return remoteData.getDetailCoin(id).map { CoinDetail(it.image.small) }
     }
 
     private fun getAllCoins(): @NonNull Single<List<Coin>> {
