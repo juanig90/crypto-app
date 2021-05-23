@@ -2,6 +2,7 @@ package com.example.cryptoapp.di
 
 import android.content.Context
 import com.example.cryptoapp.presentation.coins.di.CoinsComponent
+import com.example.cryptoapp.presentation.detail.di.DetailComponent
 import com.example.cryptoapp.presentation.home.di.HomeComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -21,6 +22,7 @@ interface ApplicationComponent {
 
   fun coinsComponent(): CoinsComponent.Factory
   fun homeComponent(): HomeComponent.Factory
+  fun detailComponent(): DetailComponent.Factory
 
   @Component.Builder
   interface Builder {
@@ -34,5 +36,5 @@ interface ApplicationComponent {
 
 }
 
-@Module(subcomponents = [HomeComponent::class, CoinsComponent::class])
+@Module(subcomponents = [HomeComponent::class, CoinsComponent::class, DetailComponent::class])
 object Subcomponents
