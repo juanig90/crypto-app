@@ -12,5 +12,5 @@ interface CoinAPI {
     fun getCoinsList(): Single<List<RemoteCoin>>
 
     @GET("coins/{id}")
-    fun getCoinDetail(@Path("id") id: Int): Single<List<RemoteCoinDetail>>
+    fun getCoinDetail(@Path("id") id: String): Single<RemoteCoinDetail>
 }
