@@ -19,6 +19,8 @@ class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsReposito
 
     override fun getCoinDetail(id: String): Single<CoinDetail> {
         return repository.getCoinDetail(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun saveCoin(coin: Coin): Completable {
