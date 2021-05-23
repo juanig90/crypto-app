@@ -34,5 +34,5 @@ interface ApplicationComponent {
 
 }
 
-@Module(subcomponents = [CoinsComponent::class])
+@Module(subcomponents = [HomeComponent::class, CoinsComponent::class])
 object Subcomponents
