@@ -23,7 +23,7 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="4dp"
             android:theme="@style/Theme.CryptoApp.Toolbar"
-            app:title="@string/coins"
+            app:title="@string/select_coins"
             app:titleTextColor="@color/white"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/Theme.CryptoApp.PopupOverlay" />
