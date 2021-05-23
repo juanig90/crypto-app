@@ -1,9 +1,11 @@
 package com.example.cryptoapp.presentation.home.di
 
+import com.example.cryptoapp.di.ActivityScope
 import com.example.cryptoapp.presentation.coins.di.CoinViewModelModule
 import com.example.cryptoapp.presentation.home.HomeActivity
 import dagger.Subcomponent
 
+@ActivityScope
 @Subcomponent(modules = [CoinViewModelModule::class])
 abstract class HomeComponent {
 
