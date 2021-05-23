@@ -5,7 +5,7 @@ import com.example.cryptoapp.presentation.detail.DetailActivity
 import dagger.Subcomponent
 
 @ActivityScope
-@Subcomponent
+@Subcomponent(modules = [DetailViewModelModule::class])
 interface DetailComponent {
 
     @Subcomponent.Factory
