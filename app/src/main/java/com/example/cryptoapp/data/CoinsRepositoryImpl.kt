@@ -17,7 +17,7 @@ class CoinsRepositoryImpl(
     }
 
     override fun getCoinDetail(id: String): Single<CoinDetail> {
-       return remoteData.getDetailCoin(id).map { CoinDetail(it.image.small) }
+       return remoteData.getDetailCoin(id).map { CoinDetail(it.image.large) }
     }
 
     private fun getAllCoins(): @NonNull Single<List<Coin>> {
