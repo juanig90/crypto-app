@@ -1,5 +1,7 @@
 package com.example.cryptoapp.presentation.detail
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -7,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {
@@ -33,5 +34,12 @@ class DetailActivity : AppCompatActivity() {
     companion object {
         const val COIN_ID_EXTRA = "COIN_ID_EXTRA"
         private const val TAG = "DetailActivity"
+
+        fun startActivity(context: Activity, id: String) {
+            Intent(context, DetailActivity::class.java).apply {
+                putExtra(COIN_ID_EXTRA, id)
+                context.startActivity(this)
+            }
+        }
     }
 }
