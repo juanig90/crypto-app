@@ -1,8 +1,6 @@
 package com.example.cryptoapp.presentation.home
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,6 +13,7 @@ import com.example.cryptoapp.presentation.CoinsAdapter
 import com.example.cryptoapp.presentation.CoinsViewModel
 import com.example.cryptoapp.presentation.GridItemDecoration
 import com.example.cryptoapp.presentation.coins.CoinsActivity
+import com.example.cryptoapp.presentation.detail.DetailActivity
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -38,9 +37,14 @@ class HomeActivity : AppCompatActivity() {
             activityHomeFloatingButton.setOnClickListener {
                 CoinsActivity.startActivity(this@HomeActivity)
             }
-            viewModel.liveCoins.observe(this@HomeActivity, { coinUI ->
+            viewModel.apply {
+                liveCoins.observe(this@HomeActivity, { coinUI ->
                 activityHomeRecycler.adapter = CoinsAdapter(viewModel, coinUI)
             })
+                liveCoin.observe(this@HomeActivity, {
+                   DetailActivity.startActivity(this@HomeActivity, it.id)
+                })
+            }
         }
     }
 

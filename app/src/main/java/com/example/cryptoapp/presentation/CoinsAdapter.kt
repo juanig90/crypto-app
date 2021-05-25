@@ -59,6 +59,9 @@ class CoinsAdapter(private val vm: CoinsViewModel,
 
         override fun bind(coin: Coin) {
             binding.coin = coin
+            binding.cardCoinView.setOnClickListener {
+                vm.onCoinSelected(coin)
+            }
         }
     }
 

@@ -20,6 +20,9 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     val liveCoins: LiveData<CoinUI>
         get() = mutableLiveCoins
 
+    val liveCoin: LiveData<Coin>
+        get() = mutableLiveCoin
+
     val liveLoading: LiveData<Boolean>
         get() = mutableLiveLoading
 
@@ -31,6 +34,8 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     private val mutableLiveLoading = MutableLiveData<Boolean>()
 
     private val mutableLiveError = MutableLiveData<Boolean>()
+
+    private val mutableLiveCoin = MutableLiveData<Coin>()
 
     fun onLoadCoins(local: Boolean = false) {
         coinsUseCase.getCoins(local)
@@ -66,6 +71,10 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun onCoinSelected(coin: Coin) {
+        mutableLiveCoin.value = coin
     }
 
     sealed class CoinUI(val coins: List<Coin>) {
