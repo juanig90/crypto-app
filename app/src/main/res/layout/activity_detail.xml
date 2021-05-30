@@ -8,6 +8,10 @@
         <variable
             name="coin"
             type="com.example.cryptoapp.domain.entity.CoinDetail" />
+
+        <variable
+            name="loading"
+            type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -232,6 +236,7 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:visibility="@{loading}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

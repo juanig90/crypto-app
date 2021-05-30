@@ -16,10 +16,21 @@ class DetailViewModel @Inject constructor(private val useCase: CoinsUseCase): Vi
 
     private val mutableLiveData = MutableLiveData<CoinDetail>()
 
+    private val mutableLiveLoading = MutableLiveData<Boolean>()
+
     val liveData: LiveData<CoinDetail> = mutableLiveData
 
+    val liveLoadingData = mutableLiveLoading
+
     fun getDetail(id: String) {
-        useCase.getCoinDetail(id).subscribe({ detail ->
+        useCase.getCoinDetail(id)
+            .doOnSubscribe {
+                mutableLiveLoading.value = true
+            }
+            .doOnTerminate {
+                mutableLiveLoading.value = false
+            }
+            .subscribe({ detail ->
             Log.d("DetailViewModel", "getDetail: $detail")
             mutableLiveData.value = detail
         },{

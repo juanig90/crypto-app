@@ -35,6 +35,9 @@ class DetailActivity : AppCompatActivity() {
                 binding.coin = it
                 Glide.with(this@DetailActivity).load(it.image).into(binding.activityDetailCoinImage)
             })
+            liveLoadingData.observe(this@DetailActivity, {
+                binding.loading = it
+            })
             getDetail(id)
         }
     }
