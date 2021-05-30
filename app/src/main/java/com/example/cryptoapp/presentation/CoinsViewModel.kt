@@ -48,7 +48,7 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
                 else
                     mutableLiveCoins.value = SwitchUI(coins)
             }, {
-                Log.d(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
+                Log.e(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
                 mutableLiveError.value = true
             }).addTo(compositeDisposable)
     }
@@ -58,13 +58,13 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
             coinsUseCase.saveCoin(coin).subscribe({
                 Log.d(TAG, "onSwitchChanged save successfully")
             }, {
-                Log.d(TAG, "onSwitchChanged save error ${it.localizedMessage}")
+                Log.e(TAG, "onSwitchChanged save error ${it.localizedMessage}")
             }).addTo(compositeDisposable)
         else
             coinsUseCase.deleteCoin(coin).subscribe({
                 Log.d(TAG, "onSwitchChanged delete successfully")
             }, {
-                Log.d(TAG, "onSwitchChanged delete error ${it.localizedMessage}")
+                Log.e(TAG, "onSwitchChanged delete error ${it.localizedMessage}")
             }).addTo(compositeDisposable)
     }
 
