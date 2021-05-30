@@ -27,4 +27,4 @@ data class MarketData(@Json(name = "current_price") val currentPrice: CurrencyVa
 
 data class CurrentPrice(val currencyValue: CurrencyValue)
 
-data class CurrencyValue(val eur: Float)
+data class CurrencyValue(val eur: Float? = null)

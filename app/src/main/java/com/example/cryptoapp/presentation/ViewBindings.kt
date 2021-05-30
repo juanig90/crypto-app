@@ -20,7 +20,8 @@ object ViewBindings {
 
     @JvmStatic
     @BindingAdapter("app:format")
-    fun bindFormat(textView: TextView, value: Float) {
+    fun bindFormat(textView: TextView, value: Float?) {
+        if (value == null) return
         val text = formatFloat(value, textView.context, true)
         textView.text = text
     }
