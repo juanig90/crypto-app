@@ -41,6 +41,7 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
         coinsUseCase.getCoins(local)
             .doOnSubscribe { mutableLiveLoading.value = true }
             .doOnTerminate { mutableLiveLoading.value = false }
+            .doOnError { mutableLiveError.value = true }
             .subscribe({ coins ->
                 Log.d(TAG, "onLoadCoins:onSuccessSubscribe $coins")
                 if(local)
@@ -49,7 +50,6 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
                     mutableLiveCoins.value = SwitchUI(coins)
             }, {
                 Log.e(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
-                mutableLiveError.value = true
             }).addTo(compositeDisposable)
     }
 
