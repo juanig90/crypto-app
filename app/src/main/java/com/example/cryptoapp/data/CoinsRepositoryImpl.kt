@@ -19,6 +19,7 @@ class CoinsRepositoryImpl(
     override fun getCoinDetail(id: String): Single<CoinDetail> {
        return remoteData.getDetailCoin(id).map { remote ->
            CoinDetail(
+               name = remote.name,
                percentageChange24h = remote.marketData.percentageChange24h.eur,
                percentageChange1w = remote.marketData.percentageChange7d.eur,
                percentageChange1m = remote.marketData.percentageChange30d.eur,
