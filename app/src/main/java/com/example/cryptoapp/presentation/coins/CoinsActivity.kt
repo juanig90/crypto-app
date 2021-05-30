@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinsBinding
+import com.example.cryptoapp.domain.extension.showSnackbar
 import com.example.cryptoapp.presentation.CoinsAdapter
 import com.example.cryptoapp.presentation.CoinsViewModel
-import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class CoinsActivity : AppCompatActivity() {
@@ -44,14 +44,8 @@ class CoinsActivity : AppCompatActivity() {
                 binding.isLoading = isLoading
             })
             liveError.observe(this@CoinsActivity, {
-                val snackbar = Snackbar.make(
-                    binding.root,
-                    getString(R.string.unknown_error),
-                    Snackbar.LENGTH_INDEFINITE
-                )
-                snackbar.run {
-                    setAction(getString(R.string.retry)) { viewModel.onLoadCoins() }
-                    show()
+                showSnackbar(binding.root, getString(R.string.unknown_error)) {
+                    viewModel.onLoadCoins()
                 }
             })
             onLoadCoins()
