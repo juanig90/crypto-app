@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityDetailBinding
+import com.example.cryptoapp.domain.extension.showSnackbar
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {
@@ -37,6 +38,11 @@ class DetailActivity : AppCompatActivity() {
             })
             liveLoadingData.observe(this@DetailActivity, {
                 binding.loading = it
+            })
+            liveDataError.observe(this@DetailActivity, {
+                showSnackbar(binding.root, getString(R.string.unknown_error)) {
+                    viewModel.getDetail(id)
+                }
             })
             getDetail(id)
         }
