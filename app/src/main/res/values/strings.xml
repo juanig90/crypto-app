@@ -5,4 +5,11 @@
     <string name="retry">Retry</string>
     <string name="coins">Coins</string>
     <string name="select_coins">Select coins</string>
+    <string name="supply">Supply</string>
+    <string name="circulating">Circulating</string>
+    <string name="one_month">1m</string>
+    <string name="one_week">1w</string>
+    <string name="one_day">24h</string>
+    <string name="change">Change</string>
+    <string name="percentage_value">%1$s %%</string>
 </resources>
