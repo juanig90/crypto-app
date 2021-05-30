@@ -22,6 +22,7 @@
             android:layout_height="200dp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:theme="@style/Theme.CryptoApp.Collapse"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -38,7 +39,8 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/activity_detail_toolbar"
                     android:layout_width="wrap_content"
-                    android:layout_height="?attr/actionBarSize" />
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="@{coin.name}"/>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
