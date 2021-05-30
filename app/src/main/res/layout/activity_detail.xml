@@ -49,6 +49,183 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/activity_detail_percentage_cv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:paddingBottom="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Bitcoin">
+
+                    <TextView
+                        android:id="@+id/activity_detail_change_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/change"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="Change"/>
+
+                    <TextView
+                        android:id="@+id/activity_detail_change_24h_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/one_day"
+                        app:layout_constraintTop_toBottomOf="@id/activity_detail_change_tv"
+                        app:layout_constraintStart_toStartOf="@id/activity_detail_change_tv"
+                        tools:text="24h"/>
+
+                    <ImageView
+                        android:id="@+id/activity_detail_change_24_up_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        app:icon="@{coin.percentageChange24h}"
+                        app:layout_constraintEnd_toStartOf="@id/activity_detail_change_24_value_tv"
+                        app:layout_constraintTop_toTopOf="@id/activity_detail_change_24h_tv"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/activity_detail_change_24_value_tv"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        app:format="@{coin.percentageChange24h}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/activity_detail_change_24_up_iv"
+                        tools:text="0.10"/>
+
+                    <TextView
+                        android:id="@+id/activity_detail_change_1w_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/one_week"
+                        app:layout_constraintTop_toBottomOf="@id/activity_detail_change_24h_tv"
+                        app:layout_constraintStart_toStartOf="@id/activity_detail_change_tv"
+                        tools:text="1w"/>
+
+                    <ImageView
+                        android:id="@+id/activity_detail_change_1w_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        app:icon="@{coin.percentageChange1w}"
+                        app:layout_constraintEnd_toStartOf="@id/activity_detail_change_1w_value_tv"
+                        app:layout_constraintTop_toTopOf="@id/activity_detail_change_1w_tv"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/activity_detail_change_1w_value_tv"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        app:format="@{coin.percentageChange1w}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/activity_detail_change_1w_iv"
+                        tools:text="0.10"/>
+
+                    <TextView
+                        android:id="@+id/activity_detail_change_1m_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/one_month"
+                        app:layout_constraintTop_toBottomOf="@id/activity_detail_change_1w_tv"
+                        app:layout_constraintStart_toStartOf="@id/activity_detail_change_tv"
+                        tools:text="1m"/>
+
+                    <ImageView
+                        android:id="@+id/activity_detail_change_1m_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        app:icon="@{coin.percentageChange1m}"
+                        app:layout_constraintEnd_toStartOf="@id/activity_detail_change_1m_value_tv"
+                        app:layout_constraintTop_toTopOf="@id/activity_detail_change_1m_tv"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/activity_detail_change_1m_value_tv"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        app:format="@{coin.percentageChange1m}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/activity_detail_change_1m_iv"
+                        tools:text="0.10"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/activity_detail_percentage_cv"
+                app:layout_constraintStart_toStartOf="@id/activity_detail_percentage_cv"
+                app:layout_constraintEnd_toEndOf="@id/activity_detail_percentage_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/activity_detail_supply_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/supply"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Supply"/>
+                    <TextView
+                        android:id="@+id/activity_detail_circulating_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/circulating"
+                        app:layout_constraintStart_toStartOf="@id/activity_detail_supply_tv"
+                        app:layout_constraintTop_toBottomOf="@id/activity_detail_supply_tv"
+                        tools:text="Circulating"/>
+
+
+                    <TextView
+                        android:id="@+id/activity_detail_circulating_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        app:simple_format="@{coin.circulating}"
+                        app:layout_constraintTop_toTopOf="@id/activity_detail_circulating_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="128738"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
