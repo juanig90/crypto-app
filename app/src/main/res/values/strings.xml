@@ -13,4 +13,6 @@
     <string name="change">Change</string>
     <string name="percentage_value">%1$s %%</string>
     <string name="growth_30_days">Growth in the last 30 days</string>
+    <string name="title_show_case">Welcome to Crypto</string>
+    <string name="show_case">Choose your favorite coin</string>
 </resources>
