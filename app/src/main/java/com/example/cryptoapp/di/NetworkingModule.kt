@@ -1,6 +1,7 @@
 package com.example.cryptoapp.di
 
 import com.example.cryptoapp.BuildConfig
+import com.example.cryptoapp.domain.networking.NumberAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -32,7 +33,12 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    fun providesMoshi() = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+    fun providesMoshi(): Moshi {
+        return Moshi.Builder()
+            .add(NumberAdapter())
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
+    }
 
     @Singleton
     @Provides
