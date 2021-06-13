@@ -38,6 +38,7 @@ captures/
 
 # IntelliJ
 *.iml
+.idea/jarRepositories.xml
 .idea/misc.xml
 .idea/compiler.xml
 .idea/runConfigurations.xml
