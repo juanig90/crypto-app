@@ -17,14 +17,19 @@ class CoinsRepositoryImpl(
     }
 
     override fun getCoinDetail(id: String): Single<CoinDetail> {
-       return remoteData.getDetailCoin(id).map { remote ->
+       val detail = remoteData.getDetailCoin(id)
+       val historical = remoteData.getHistoricalPrices(id).map { remoteHistorical ->
+           remoteHistorical.prices.map { it[1] as Float }
+       }
+       return Single.zip(detail, historical) { coin, prices ->
            CoinDetail(
-               name = remote.name,
-               percentageChange24h = remote.marketData.percentageChange24h.eur,
-               percentageChange1w = remote.marketData.percentageChange7d.eur,
-               percentageChange1m = remote.marketData.percentageChange30d.eur,
-               circulating = remote.marketData.circulatingSupply,
-               image = remote.image.large
+               name = coin.name,
+               percentageChange24h = coin.marketData.percentageChange24h.eur,
+               percentageChange1w = coin.marketData.percentageChange7d.eur,
+               percentageChange1m = coin.marketData.percentageChange30d.eur,
+               circulating = coin.marketData.circulatingSupply,
+               image = coin.image.large,
+               prices = prices
            )
        }
     }
