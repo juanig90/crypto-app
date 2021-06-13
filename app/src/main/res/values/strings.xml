@@ -12,4 +12,5 @@
     <string name="one_day">24h</string>
     <string name="change">Change</string>
     <string name="percentage_value">%1$s %%</string>
+    <string name="growth_30_days">Growth in the last 30 days</string>
 </resources>
