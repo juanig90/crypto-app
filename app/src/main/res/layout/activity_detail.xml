@@ -90,6 +90,12 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="Change" />
 
+                        <androidx.constraintlayout.widget.Group
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:constraint_referenced_ids="activity_detail_change_24h_tv, activity_detail_change_24_value_tv,activity_detail_change_24_up_iv"
+                            app:visibility="@{coin.percentageChange24h != null}"/>
+
                         <TextView
                             android:id="@+id/activity_detail_change_24h_tv"
                             android:layout_width="wrap_content"
@@ -120,6 +126,12 @@
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_24_up_iv"
                             tools:text="0.10" />
 
+                        <androidx.constraintlayout.widget.Group
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:constraint_referenced_ids="activity_detail_change_1w_tv, activity_detail_change_1w_value_tv, activity_detail_change_1w_iv"
+                            app:visibility="@{coin.percentageChange1w != null}"/>
+
                         <TextView
                             android:id="@+id/activity_detail_change_1w_tv"
                             android:layout_width="wrap_content"
@@ -149,6 +161,12 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_1w_iv"
                             tools:text="0.10" />
+
+                        <androidx.constraintlayout.widget.Group
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:constraint_referenced_ids="activity_detail_change_1m_tv, activity_detail_change_1m_iv, activity_detail_change_1m_value_tv"
+                            app:visibility="@{coin.percentageChange1m != null}"/>
 
                         <TextView
                             android:id="@+id/activity_detail_change_1m_tv"
