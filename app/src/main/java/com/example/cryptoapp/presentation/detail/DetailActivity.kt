@@ -32,9 +32,7 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.activityDetailToolbar)
         viewModel.apply {
             liveData.observe(this@DetailActivity, {
-                Log.d(TAG, "Observe Data:$it ")
                 binding.coin = it
-                Glide.with(this@DetailActivity).load(it.image).into(binding.activityDetailCoinImage)
             })
             liveLoadingData.observe(this@DetailActivity, {
                 binding.loading = it
