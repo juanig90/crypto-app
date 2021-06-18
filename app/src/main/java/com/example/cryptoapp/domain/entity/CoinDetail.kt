@@ -7,4 +7,5 @@ data class CoinDetail(
     val percentageChange1m: Float?,
     val circulating: Float,
     val image: String,
-    val prices: List<Float>)
+    val prices: List<Float>,
+    val hasData: Boolean)

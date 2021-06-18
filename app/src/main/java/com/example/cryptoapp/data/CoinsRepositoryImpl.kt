@@ -1,6 +1,7 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
+import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
@@ -24,6 +25,7 @@ class CoinsRepositoryImpl(
        return Single.zip(detail, historical) { coin, prices ->
            CoinDetail(
                name = coin.name,
+               hasData =  hasData(coin),
                percentageChange24h = coin.marketData.percentageChange24h.eur,
                percentageChange1w = coin.marketData.percentageChange7d.eur,
                percentageChange1m = coin.marketData.percentageChange30d.eur,
@@ -32,6 +34,12 @@ class CoinsRepositoryImpl(
                prices = prices
            )
        }
+    }
+
+    private fun hasData(coin: RemoteCoinDetail): Boolean {
+        return coin.marketData.percentageChange24h.eur  != null ||
+               coin.marketData.percentageChange7d.eur   != null ||
+               coin.marketData.percentageChange30d.eur  != null
     }
 
     private fun getAllCoins(): @NonNull Single<List<Coin>> {

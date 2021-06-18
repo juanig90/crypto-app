@@ -32,7 +32,10 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.activityDetailToolbar)
         viewModel.apply {
             liveData.observe(this@DetailActivity, {
-                binding.coin = it
+                binding.run {
+                    hasData = it.hasData
+                    coin = it
+                }
             })
             liveLoadingData.observe(this@DetailActivity, {
                 binding.loading = it
