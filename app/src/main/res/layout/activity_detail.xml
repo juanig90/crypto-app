@@ -118,7 +118,6 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
-                            app:format="@{coin.percentageChange24h}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_24_up_iv"
                             tools:text="0.10" />
@@ -154,7 +153,6 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
-                            app:format="@{coin.percentageChange1w}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_1w_iv"
                             tools:text="0.10" />
@@ -190,7 +188,6 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
-                            app:format="@{coin.percentageChange1m}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_1m_iv"
                             tools:text="0.10" />
@@ -246,7 +243,6 @@
                             android:layout_marginEnd="30dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_circulating_tv"
-                            app:simple_format="@{coin.circulating}"
                             tools:text="128738" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
