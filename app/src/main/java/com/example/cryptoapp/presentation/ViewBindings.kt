@@ -47,40 +47,6 @@ object ViewBindings {
             imageView.setImageResource(R.drawable.ic_expand_less_black)
     }
 
-    @JvmStatic
-    @BindingAdapter("app:entries")
-    fun bindChart(lineChartView: LineChart, values: List<Float>?) {
-        values?.let {
-            val entries = ArrayList<Entry>()
-            values.forEachIndexed { index, value ->
-                entries.add(Entry(index.toFloat(), value))
-            }
-            val dataSet = LineDataSet(entries, lineChartView.context.getString(R.string.growth_30_days))
-            dataSet.run {
-                setDrawFilled(true)
-                setDrawCircles(false)
-                setDrawValues(false)
-                mode = LineDataSet.Mode.CUBIC_BEZIER
-                setDrawHorizontalHighlightIndicator(false)
-                setDrawVerticalHighlightIndicator(false)
-            }
-            val lineData = LineData(dataSet)
-            lineChartView.run {
-                data = lineData
-                description = Description().apply { text = "" }
-                with(axisLeft) {
-                    setDrawLabels(false)
-                    setDrawGridLines(false)
-                }
-                with(axisRight) {
-                    setDrawLabels(false)
-                    setDrawGridLines(false)
-                }
-                xAxis.isEnabled = false
-            }
-        }
-    }
-
     private fun formatFloat(value: Float,
                             context: Context,
                             includePercentageSymbol: Boolean = false): String {

@@ -35,6 +35,7 @@ class DetailActivity : AppCompatActivity() {
                 binding.run {
                     hasData = it.hasData
                     coin = it
+                    activityDetailLineChartView.drawChart(it.prices)
                 }
             })
             liveLoadingData.observe(this@DetailActivity, {
