@@ -11,6 +11,22 @@
             type="com.example.cryptoapp.domain.entity.CoinDetail" />
 
         <variable
+            name="price24"
+            type="String" />
+
+        <variable
+            name="price1w"
+            type="String" />
+
+        <variable
+            name="price1m"
+            type="String" />
+
+        <variable
+            name="circulating"
+            type="String"/>
+
+        <variable
             name="hasData"
             type="Boolean" />
 
@@ -118,6 +134,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
+                            android:text="@{price24}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_24_up_iv"
                             tools:text="0.10" />
@@ -153,6 +170,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
+                            android:text="@{price1w}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_1w_iv"
                             tools:text="0.10" />
@@ -188,6 +206,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
+                            android:text="@{price1m}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_change_1m_iv"
                             tools:text="0.10" />
@@ -241,6 +260,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="30dp"
+                            android:text="@{circulating}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/activity_detail_circulating_tv"
                             tools:text="128738" />

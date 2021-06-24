@@ -3,15 +3,14 @@ package com.example.cryptoapp.presentation.detail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityDetailBinding
+import com.example.cryptoapp.domain.extension.format
 import com.example.cryptoapp.domain.extension.showSnackbar
 import javax.inject.Inject
 
@@ -35,6 +34,10 @@ class DetailActivity : AppCompatActivity() {
                 binding.run {
                     hasData = it.hasData
                     coin = it
+                    price24 = getString(R.string.percentage_value, it.percentageChange24h?.format(2))
+                    price1w = getString(R.string.percentage_value,it.percentageChange1w?.format(2))
+                    price1m = getString(R.string.percentage_value,it.percentageChange1m?.format(2))
+                    circulating = it.circulating.format(2)
                     activityDetailLineChartView.drawChart(it.prices)
                 }
             })
