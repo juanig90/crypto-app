@@ -44,8 +44,8 @@ class DetailActivity : AppCompatActivity() {
             liveLoadingData.observe(this@DetailActivity, {
                 binding.loading = it
             })
-            liveDataError.observe(this@DetailActivity, {
-                showSnackbar(binding.root, getString(R.string.unknown_error)) {
+            liveDataError.observe(this@DetailActivity, { msg ->
+                showSnackbar(binding.root, msg) {
                     viewModel.getDetail(id)
                 }
             })

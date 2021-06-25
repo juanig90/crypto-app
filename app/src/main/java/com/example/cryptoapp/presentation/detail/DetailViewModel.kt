@@ -19,9 +19,9 @@ class DetailViewModel @Inject constructor(private val useCase: CoinsUseCase): Vi
 
     private val mutableLiveLoading = MutableLiveData<Boolean>()
 
-    private val mutableLiveError = MutableLiveData<Boolean>()
+    private val mutableLiveError = MutableLiveData<String>()
 
-    val liveDataError: LiveData<Boolean> = mutableLiveError
+    val liveDataError: LiveData<String> = mutableLiveError
 
     val liveData: LiveData<CoinDetail> = mutableLiveData
 
@@ -39,7 +39,7 @@ class DetailViewModel @Inject constructor(private val useCase: CoinsUseCase): Vi
                 Log.d("DetailViewModel", "onResult: $result")
                 when (result) {
                     is Result.Success -> mutableLiveData.value = result.data
-                    is Result.Error -> mutableLiveError.value = true
+                    is Result.Error -> mutableLiveError.value = result.msg
 
                 }
         },{
