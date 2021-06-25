@@ -15,5 +15,5 @@
     <string name="growth_30_days">Growth in the last 30 days</string>
     <string name="title_show_case">Welcome to Crypto</string>
     <string name="show_case">Choose your favorite coin</string>
-    <string name="check_your_connection">Please check your connectivity and tap here to retry</string>
+    <string name="check_your_connection">Please check your connectivity</string>
 </resources>
