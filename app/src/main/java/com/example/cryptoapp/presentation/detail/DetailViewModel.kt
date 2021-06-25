@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -34,12 +35,13 @@ class DetailViewModel @Inject constructor(private val useCase: CoinsUseCase): Vi
             .doOnTerminate {
                 mutableLiveLoading.value = false
             }
-            .doOnError {
-                mutableLiveError.value = true
-            }
-            .subscribe({ detail ->
-            Log.d("DetailViewModel", "getDetail: $detail")
-            mutableLiveData.value = detail
+            .subscribe({ result ->
+                Log.d("DetailViewModel", "onResult: $result")
+                when (result) {
+                    is Result.Success -> mutableLiveData.value = result.data
+                    is Result.Error -> mutableLiveError.value = true
+
+                }
         },{
             Log.e("DetailViewModel", "onError:${it.message}")
         }).addTo(compositeDisposable)

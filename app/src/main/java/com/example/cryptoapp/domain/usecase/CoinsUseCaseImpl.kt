@@ -1,5 +1,7 @@
 package com.example.cryptoapp.domain.usecase
 
+import com.example.cryptoapp.data.Result
+import com.example.cryptoapp.domain.ErrorMapper
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
@@ -9,7 +11,10 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
-class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsRepository) : CoinsUseCase {
+class CoinsUseCaseImpl @Inject constructor(
+    private val repository: CoinsRepository,
+    private val errorMapper: ErrorMapper
+    ) : CoinsUseCase {
 
     override fun getCoins(local: Boolean): Single<List<Coin>> {
         return repository.getCoins(local)
@@ -17,8 +22,12 @@ class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsReposito
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getCoinDetail(id: String): Single<CoinDetail> {
+    override fun getCoinDetail(id: String): Single<Result<CoinDetail>> {
         return repository.getCoinDetail(id)
+            .onErrorResumeNext {
+                val msg = errorMapper.mapError(it)
+                Single.just(Result.Error(msg))
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

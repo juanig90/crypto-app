@@ -2,14 +2,16 @@ package com.example.cryptoapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.cryptoapp.data.*
-import com.example.cryptoapp.data.entity.RemoteCoin
+import com.example.cryptoapp.data.CoinsRepositoryImpl
+import com.example.cryptoapp.data.LocalDataSource
+import com.example.cryptoapp.data.RemoteDataSource
 import com.example.cryptoapp.data.local.AppDatabase
 import com.example.cryptoapp.data.local.CoinDao
 import com.example.cryptoapp.data.local.LocalDataSourceImpl
 import com.example.cryptoapp.data.remote.CoinAPI
 import com.example.cryptoapp.data.remote.RemoteDataSourceImpl
-import com.example.cryptoapp.domain.entity.Coin
+import com.example.cryptoapp.domain.ErrorMapper
+import com.example.cryptoapp.domain.ErrorMapperImpl
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import com.example.cryptoapp.domain.usecase.CoinsUseCaseImpl
@@ -52,14 +54,20 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesCoinsUseCase(coinsRepository: CoinsRepository): CoinsUseCase {
-        return CoinsUseCaseImpl(coinsRepository)
+    fun providesCoinsUseCase(coinsRepository: CoinsRepository, errorMapper: ErrorMapper): CoinsUseCase {
+        return CoinsUseCaseImpl(coinsRepository, errorMapper)
     }
 
     @Singleton
     @Provides
     fun providesDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "crypto-db").build()
+    }
+
+    @Singleton
+    @Provides
+    fun providesErrorMapper(context: Context): ErrorMapper {
+        return ErrorMapperImpl(context)
     }
 
 }
