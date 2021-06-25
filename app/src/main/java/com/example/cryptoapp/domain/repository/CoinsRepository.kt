@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface CoinsRepository {
 
-    fun getCoins(local: Boolean = false): Single<List<Coin>>
+    fun getCoins(local: Boolean = false): Single<Result<List<Coin>>>
     fun saveCoin(coin: Coin): Completable
     fun deleteCoin(coin: Coin): Completable
     fun getCoinDetail(id: String): Single<Result<CoinDetail>>

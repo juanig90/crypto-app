@@ -13,7 +13,7 @@ class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
     private val remoteData: RemoteDataSource): CoinsRepository {
 
-    override fun getCoins(local: Boolean): Single<List<Coin>> {
+    override fun getCoins(local: Boolean): Single<Result<List<Coin>>> {
         return if(local) getLocalCoins() else getAllCoins()
     }
 
@@ -44,34 +44,37 @@ class CoinsRepositoryImpl(
                coin.marketData.percentageChange30d.eur  != null
     }
 
-    private fun getAllCoins(): @NonNull Single<List<Coin>> {
-        return Single.zip(getLocalCoins(), getRemoteCoins()) { local, remote ->
-            (local + remote).distinctBy { coin -> coin.id }
+    private fun getAllCoins(): @NonNull Single<Result<List<Coin>>> {
+        return Single.zip(getLocalCoins(), getRemoteCoins()) { localResult, remoteResult ->
+            val local = (localResult as Result.Success).data
+            val remote = (remoteResult as Result.Success).data
+            val data = (local + remote).distinctBy { coin -> coin.id }
+            Result.Success(data)
         }
     }
 
-    private fun getRemoteCoins(): @NonNull Single<List<Coin>> {
+    private fun getRemoteCoins(): @NonNull Single<Result<List<Coin>>> {
         return remoteData.getCoins().map { coins ->
-            coins.map { coin ->
+            Result.Success(coins.map { coin ->
                 Coin(
                     id = coin.id,
                     symbol = coin.symbol,
                     name = coin.name
                 )
-            }
+            })
         }
     }
 
-    private fun getLocalCoins(): Single<List<Coin>> {
+    private fun getLocalCoins(): Single<Result<List<Coin>>> {
         return localData.getCoins().map { coins ->
-            coins.map { localCoin ->
+            Result.Success(coins.map { localCoin ->
                 Coin(
                     id = localCoin.id,
                     symbol = localCoin.symbol,
                     name = localCoin.name,
                     isFavorite = true
                 )
-            }
+            })
         }
     }
 

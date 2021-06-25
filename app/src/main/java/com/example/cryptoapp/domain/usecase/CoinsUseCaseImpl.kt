@@ -16,7 +16,7 @@ class CoinsUseCaseImpl @Inject constructor(
     private val errorMapper: ErrorMapper
     ) : CoinsUseCase {
 
-    override fun getCoins(local: Boolean): Single<List<Coin>> {
+    override fun getCoins(local: Boolean): Single<Result<List<Coin>>> {
         return repository.getCoins(local)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import com.example.cryptoapp.presentation.CoinsViewModel.CoinUI.*
@@ -41,13 +42,19 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
         coinsUseCase.getCoins(local)
             .doOnSubscribe { mutableLiveLoading.value = true }
             .doOnTerminate { mutableLiveLoading.value = false }
-            .doOnError { mutableLiveError.value = true }
-            .subscribe({ coins ->
-                Log.d(TAG, "onLoadCoins:onSuccessSubscribe $coins")
-                if(local)
-                    mutableLiveCoins.value = CardUI(coins)
-                else
-                    mutableLiveCoins.value = SwitchUI(coins)
+            .subscribe({ result ->
+                Log.d(TAG, "onLoadCoins:onResult $result")
+                when(result) {
+                    is Result.Success -> {
+                        if(local)
+                            mutableLiveCoins.value = CardUI(result.data)
+                        else
+                            mutableLiveCoins.value = SwitchUI(result.data)
+                    }
+                    is Result.Error -> {
+                         mutableLiveError.value = true
+                    }
+                }
             }, {
                 Log.e(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
             }).addTo(compositeDisposable)
