@@ -18,6 +18,10 @@ class CoinsUseCaseImpl @Inject constructor(
 
     override fun getCoins(local: Boolean): Single<Result<List<Coin>>> {
         return repository.getCoins(local)
+            .onErrorResumeNext {
+                val msg = errorMapper.mapError(it)
+                Single.just(Result.Error(msg))
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

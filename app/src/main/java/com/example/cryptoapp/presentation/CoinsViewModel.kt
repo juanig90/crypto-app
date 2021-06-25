@@ -27,14 +27,14 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     val liveLoading: LiveData<Boolean>
         get() = mutableLiveLoading
 
-    val liveError: LiveData<Boolean>
+    val liveError: LiveData<String>
         get() = mutableLiveError
 
     private val mutableLiveCoins = MutableLiveData<CoinUI>()
 
     private val mutableLiveLoading = MutableLiveData<Boolean>()
 
-    private val mutableLiveError = MutableLiveData<Boolean>()
+    private val mutableLiveError = MutableLiveData<String>()
 
     private val mutableLiveCoin = MutableLiveData<Coin>()
 
@@ -51,9 +51,7 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
                         else
                             mutableLiveCoins.value = SwitchUI(result.data)
                     }
-                    is Result.Error -> {
-                         mutableLiveError.value = true
-                    }
+                    is Result.Error -> mutableLiveError.value = result.msg
                 }
             }, {
                 Log.e(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")

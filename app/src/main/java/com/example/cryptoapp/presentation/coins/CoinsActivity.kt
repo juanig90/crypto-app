@@ -43,8 +43,8 @@ class CoinsActivity : AppCompatActivity() {
             liveLoading.observe(this@CoinsActivity, { isLoading ->
                 binding.isLoading = isLoading
             })
-            liveError.observe(this@CoinsActivity, {
-                showSnackbar(binding.root, getString(R.string.unknown_error)) {
+            liveError.observe(this@CoinsActivity, { msg ->
+                showSnackbar(binding.root, msg) {
                     viewModel.onLoadCoins()
                 }
             })
