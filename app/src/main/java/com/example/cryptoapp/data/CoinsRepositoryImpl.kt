@@ -37,22 +37,10 @@ class CoinsRepositoryImpl(
     }
 
     override fun saveCoin(coin: Coin) {
-        return localData.saveCoins(
-            LocalCoin(
-                id = coin.id,
-                symbol = coin.symbol,
-                name = coin.name
-            )
-        )
+        TODO("Not yet implemented")
     }
 
     override fun deleteCoin(coin: Coin) {
-        return localData.deleteCoin(
-            LocalCoin(
-                id = coin.id,
-                symbol = coin.symbol,
-                name = coin.name
-            )
-        )
+        TODO("Not yet implemented")
     }
 }
