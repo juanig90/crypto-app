@@ -11,9 +11,9 @@ interface CoinDao {
     fun getAll(): Flow<List<LocalCoin>>
 
     @Insert( onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg coins: LocalCoin)
+    suspend fun insertAll(vararg coins: LocalCoin)
 
     @Delete
-    fun delete(coin: LocalCoin)
+    suspend fun delete(coin: LocalCoin)
 
 }

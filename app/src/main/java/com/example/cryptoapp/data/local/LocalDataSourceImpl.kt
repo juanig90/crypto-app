@@ -7,15 +7,15 @@ import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val dao: CoinDao): LocalDataSource {
 
-    override fun getCoins(): Flow<List<LocalCoin>> {
+    override suspend fun getCoins(): Flow<List<LocalCoin>> {
         return dao.getAll()
     }
 
-    override fun saveCoins(vararg coins: LocalCoin) {
+    override suspend fun saveCoins(vararg coins: LocalCoin) {
         return dao.insertAll(*coins)
     }
 
-    override fun deleteCoin(coin: LocalCoin) {
+    override suspend fun deleteCoin(coin: LocalCoin) {
         return dao.delete(coin)
     }
 }

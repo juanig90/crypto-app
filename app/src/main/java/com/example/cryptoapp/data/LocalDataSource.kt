@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
-    fun getCoins(): Flow<List<LocalCoin>>
-    fun saveCoins(vararg coins: LocalCoin)
-    fun deleteCoin(coin: LocalCoin)
+    suspend fun getCoins(): Flow<List<LocalCoin>>
+    suspend fun saveCoins(vararg coins: LocalCoin)
+    suspend fun deleteCoin(coin: LocalCoin)
 }
