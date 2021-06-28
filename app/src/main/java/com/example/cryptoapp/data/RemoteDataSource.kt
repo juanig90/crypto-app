@@ -6,7 +6,7 @@ import com.example.cryptoapp.data.entity.RemoteHistoricalPrices
 
 interface RemoteDataSource {
 
-    fun getCoins(): List<RemoteCoin>
-    fun getDetailCoin(id: String): RemoteCoinDetail
-    fun getHistoricalPrices(id: String): RemoteHistoricalPrices
+    suspend fun getCoins(): List<RemoteCoin>
+    suspend fun getDetailCoin(id: String): RemoteCoinDetail
+    suspend fun getHistoricalPrices(id: String): RemoteHistoricalPrices
 }

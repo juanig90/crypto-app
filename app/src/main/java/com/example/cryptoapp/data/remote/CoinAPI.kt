@@ -10,13 +10,13 @@ import retrofit2.http.Query
 interface CoinAPI {
 
     @GET("coins/list")
-    fun getCoinsList(): List<RemoteCoin>
+    suspend fun getCoinsList(): List<RemoteCoin>
 
     @GET("coins/{id}")
-    fun getCoinDetail(@Path("id") id: String): RemoteCoinDetail
+    suspend fun getCoinDetail(@Path("id") id: String): RemoteCoinDetail
 
     @GET("coins/{id}/market_chart")
-    fun getHistoricalCoin(
+    suspend fun getHistoricalCoin(
         @Path("id") id: String,
         @Query("vs_currency") currency: String = "eur",
         @Query("days") days: String = "30"
