@@ -8,15 +8,11 @@ import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import com.example.cryptoapp.presentation.CoinsViewModel.CoinUI.*
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.kotlin.addTo
 import javax.inject.Inject
 
 private const val TAG = "CoinsViewModel"
 
 class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase) : ViewModel() {
-
-    private val compositeDisposable = CompositeDisposable()
 
     val liveCoins: LiveData<CoinUI>
         get() = mutableLiveCoins
@@ -39,43 +35,11 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     private val mutableLiveCoin = MutableLiveData<Coin>()
 
     fun onLoadCoins(local: Boolean = false) {
-        coinsUseCase.getCoins(local)
-            .doOnSubscribe { mutableLiveLoading.value = true }
-            .doOnTerminate { mutableLiveLoading.value = false }
-            .subscribe({ result ->
-                Log.d(TAG, "onLoadCoins:onResult $result")
-                when(result) {
-                    is Result.Success -> {
-                        if(local)
-                            mutableLiveCoins.value = CardUI(result.data)
-                        else
-                            mutableLiveCoins.value = SwitchUI(result.data)
-                    }
-                    is Result.Error -> mutableLiveError.value = result.msg
-                }
-            }, {
-                Log.e(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
-            }).addTo(compositeDisposable)
+        TODO("Not yet implemented")
     }
 
     fun onSwitchChanged(coin: Coin, value: Boolean) {
-        if (value)
-            coinsUseCase.saveCoin(coin).subscribe({
-                Log.d(TAG, "onSwitchChanged save successfully")
-            }, {
-                Log.e(TAG, "onSwitchChanged save error ${it.localizedMessage}")
-            }).addTo(compositeDisposable)
-        else
-            coinsUseCase.deleteCoin(coin).subscribe({
-                Log.d(TAG, "onSwitchChanged delete successfully")
-            }, {
-                Log.e(TAG, "onSwitchChanged delete error ${it.localizedMessage}")
-            }).addTo(compositeDisposable)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+        TODO("Not yet implemented")
     }
 
     fun onCoinSelected(coin: Coin) {

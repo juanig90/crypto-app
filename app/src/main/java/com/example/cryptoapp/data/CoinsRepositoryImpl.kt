@@ -5,37 +5,17 @@ import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
-import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
     private val remoteData: RemoteDataSource): CoinsRepository {
 
-    override fun getCoins(local: Boolean): Single<Result<List<Coin>>> {
+    override fun getCoins(local: Boolean): Result<List<Coin>> {
         return if(local) getLocalCoins() else getAllCoins()
     }
 
-    override fun getCoinDetail(id: String): Single<Result<CoinDetail>> {
-       val detail = remoteData.getDetailCoin(id)
-       val historical = remoteData.getHistoricalPrices(id).map { remoteHistorical ->
-           remoteHistorical.prices.map { it[1] as Float }
-       }
-       return Single.zip(detail, historical) { coin, prices ->
-           Result.Success(
-               CoinDetail(
-                   name = coin.name,
-                   hasData = hasData(coin),
-                   percentageChange24h = coin.marketData.percentageChange24h.eur,
-                   percentageChange1w = coin.marketData.percentageChange7d.eur,
-                   percentageChange1m = coin.marketData.percentageChange30d.eur,
-                   circulating = coin.marketData.circulatingSupply,
-                   image = coin.image.large,
-                   prices = prices
-               )
-           )
-       }
+    override fun getCoinDetail(id: String): Result<CoinDetail> {
+        TODO("Not yet implemented")
     }
 
     private fun hasData(coin: RemoteCoinDetail): Boolean {
@@ -44,41 +24,19 @@ class CoinsRepositoryImpl(
                coin.marketData.percentageChange30d.eur  != null
     }
 
-    private fun getAllCoins(): @NonNull Single<Result<List<Coin>>> {
-        return Single.zip(getLocalCoins(), getRemoteCoins()) { localResult, remoteResult ->
-            val local = (localResult as Result.Success).data
-            val remote = (remoteResult as Result.Success).data
-            val data = (local + remote).distinctBy { coin -> coin.id }
-            Result.Success(data)
-        }
+    private fun getAllCoins(): Result<List<Coin>> {
+        TODO("Not yet implemented")
     }
 
-    private fun getRemoteCoins(): @NonNull Single<Result<List<Coin>>> {
-        return remoteData.getCoins().map { coins ->
-            Result.Success(coins.map { coin ->
-                Coin(
-                    id = coin.id,
-                    symbol = coin.symbol,
-                    name = coin.name
-                )
-            })
-        }
+    private fun getRemoteCoins(): Result<List<Coin>> {
+        TODO("Not yet implemented")
     }
 
-    private fun getLocalCoins(): Single<Result<List<Coin>>> {
-        return localData.getCoins().map { coins ->
-            Result.Success(coins.map { localCoin ->
-                Coin(
-                    id = localCoin.id,
-                    symbol = localCoin.symbol,
-                    name = localCoin.name,
-                    isFavorite = true
-                )
-            })
-        }
+    private fun getLocalCoins(): Result<List<Coin>> {
+        TODO("Not yet implemented")
     }
 
-    override fun saveCoin(coin: Coin): Completable {
+    override fun saveCoin(coin: Coin) {
         return localData.saveCoins(
             LocalCoin(
                 id = coin.id,
@@ -88,7 +46,7 @@ class CoinsRepositoryImpl(
         )
     }
 
-    override fun deleteCoin(coin: Coin): Completable {
+    override fun deleteCoin(coin: Coin) {
         return localData.deleteCoin(
             LocalCoin(
                 id = coin.id,

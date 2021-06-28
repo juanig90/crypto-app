@@ -10,7 +10,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -51,7 +50,6 @@ object NetworkingModule {
     fun providesRetrofit(converter: Converter.Factory, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.coingecko.com/api/v3/")
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(converter)
             .client(okHttpClient)
             .build()
