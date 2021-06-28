@@ -5,16 +5,25 @@ import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
+import kotlinx.coroutines.flow.Flow
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
     private val remoteData: RemoteDataSource): CoinsRepository {
 
-    override fun getCoins(local: Boolean): Result<List<Coin>> {
-        return if(local) getLocalCoins() else getAllCoins()
+    override fun getCoins(local: Boolean): Flow<Result<List<Coin>>> {
+        TODO("Not yet implemented")
     }
 
-    override fun getCoinDetail(id: String): Result<CoinDetail> {
+    override fun getCoinDetail(id: String): Flow<Result<CoinDetail>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveCoin(coin: Coin) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteCoin(coin: Coin) {
         TODO("Not yet implemented")
     }
 
@@ -24,23 +33,16 @@ class CoinsRepositoryImpl(
                coin.marketData.percentageChange30d.eur  != null
     }
 
-    private fun getAllCoins(): Result<List<Coin>> {
+    private fun getAllCoins(): Flow<Result<List<Coin>>> {
         TODO("Not yet implemented")
     }
 
-    private fun getRemoteCoins(): Result<List<Coin>> {
+    private fun getRemoteCoins(): Flow<Result<List<Coin>>> {
         TODO("Not yet implemented")
     }
 
-    private fun getLocalCoins(): Result<List<Coin>> {
+    private fun getLocalCoins(): Flow<Result<List<Coin>>> {
         TODO("Not yet implemented")
     }
 
-    override fun saveCoin(coin: Coin) {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteCoin(coin: Coin) {
-        TODO("Not yet implemented")
-    }
 }
