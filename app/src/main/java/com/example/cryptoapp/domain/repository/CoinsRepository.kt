@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface CoinsRepository {
 
-    fun getCoins(local: Boolean = false): Flow<Result<List<Coin>>>
-    fun getCoinDetail(id: String): Flow<Result<CoinDetail>>
+    suspend fun getCoins(local: Boolean = false): Flow<Result<List<Coin>>>
+    suspend fun getCoinDetail(id: String): Flow<Result<CoinDetail>>
     suspend fun saveCoin(coin: Coin)
     suspend fun deleteCoin(coin: Coin)
 }

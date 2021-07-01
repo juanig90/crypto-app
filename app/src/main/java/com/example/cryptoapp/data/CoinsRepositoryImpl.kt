@@ -1,21 +1,23 @@
 package com.example.cryptoapp.data
 
-import com.example.cryptoapp.data.entity.LocalCoin
 import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
     private val remoteData: RemoteDataSource): CoinsRepository {
 
-    override fun getCoins(local: Boolean): Flow<Result<List<Coin>>> {
-        TODO("Not yet implemented")
+    override suspend fun getCoins(local: Boolean): Flow<Result<List<Coin>>> {
+        return getRemoteCoins().flowOn(Dispatchers.IO)
     }
 
-    override fun getCoinDetail(id: String): Flow<Result<CoinDetail>> {
+    override suspend fun getCoinDetail(id: String): Flow<Result<CoinDetail>> {
         TODO("Not yet implemented")
     }
 
@@ -37,8 +39,16 @@ class CoinsRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    private fun getRemoteCoins(): Flow<Result<List<Coin>>> {
-        TODO("Not yet implemented")
+    private suspend fun getRemoteCoins(): Flow<Result<List<Coin>>> {
+        return remoteData.getCoins().map { coins ->
+            Result.Success(coins.map { coin ->
+                Coin(
+                    id = coin.id,
+                    symbol = coin.symbol,
+                    name = coin.name
+                )
+            })
+        }
     }
 
     private fun getLocalCoins(): Flow<Result<List<Coin>>> {

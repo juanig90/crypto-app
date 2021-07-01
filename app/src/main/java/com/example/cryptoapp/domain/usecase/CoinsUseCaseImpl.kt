@@ -6,7 +6,6 @@ import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import kotlinx.coroutines.flow.Flow
-
 import javax.inject.Inject
 
 class CoinsUseCaseImpl @Inject constructor(
@@ -14,11 +13,11 @@ class CoinsUseCaseImpl @Inject constructor(
     private val errorMapper: ErrorMapper
     ) : CoinsUseCase {
 
-    override fun getCoins(local: Boolean): Flow<Result<List<Coin>>> {
+    override suspend fun getCoins(local: Boolean): Flow<Result<List<Coin>>> {
         return repository.getCoins(local)
     }
 
-    override fun getCoinDetail(id: String): Flow<Result<CoinDetail>> {
+    override suspend fun getCoinDetail(id: String): Flow<Result<CoinDetail>> {
         return repository.getCoinDetail(id)
     }
 
