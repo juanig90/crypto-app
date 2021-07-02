@@ -26,7 +26,6 @@ class CoinsRepositoryImpl(
            Result.Success(
                CoinDetail(
                    name = coin.name,
-                   hasData = hasData(coin),
                    percentageChange24h = coin.marketData.percentageChange24h.eur,
                    percentageChange1w = coin.marketData.percentageChange7d.eur,
                    percentageChange1m = coin.marketData.percentageChange30d.eur,
@@ -36,12 +35,6 @@ class CoinsRepositoryImpl(
                )
            )
        }
-    }
-
-    private fun hasData(coin: RemoteCoinDetail): Boolean {
-        return coin.marketData.percentageChange24h.eur  != null ||
-               coin.marketData.percentageChange7d.eur   != null ||
-               coin.marketData.percentageChange30d.eur  != null
     }
 
     private fun getAllCoins(): @NonNull Single<Result<List<Coin>>> {

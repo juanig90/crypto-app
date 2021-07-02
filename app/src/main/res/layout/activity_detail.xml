@@ -27,10 +27,6 @@
             type="String"/>
 
         <variable
-            name="hasData"
-            type="Boolean" />
-
-        <variable
             name="loading"
             type="Boolean" />
     </data>
@@ -85,7 +81,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:visibility="@{hasData}">
+                    app:visibility="@{coin != null}">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
