@@ -1,11 +1,9 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
-import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.entity.CoinDetail
 import com.example.cryptoapp.domain.repository.CoinsRepository
-import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
@@ -37,7 +35,27 @@ class CoinsRepositoryImpl(
        }
     }
 
-    private fun getAllCoins(): @NonNull Single<Result<List<Coin>>> {
+    override fun saveCoin(coin: Coin): Completable {
+        return localData.saveCoins(
+            LocalCoin(
+                id = coin.id,
+                symbol = coin.symbol,
+                name = coin.name
+            )
+        )
+    }
+
+    override fun deleteCoin(coin: Coin): Completable {
+        return localData.deleteCoin(
+            LocalCoin(
+                id = coin.id,
+                symbol = coin.symbol,
+                name = coin.name
+            )
+        )
+    }
+
+    private fun getAllCoins(): Single<Result<List<Coin>>> {
         return Single.zip(getLocalCoins(), getRemoteCoins()) { localResult, remoteResult ->
             val local = (localResult as Result.Success).data
             val remote = (remoteResult as Result.Success).data
@@ -46,7 +64,7 @@ class CoinsRepositoryImpl(
         }
     }
 
-    private fun getRemoteCoins(): @NonNull Single<Result<List<Coin>>> {
+    private fun getRemoteCoins(): Single<Result<List<Coin>>> {
         return remoteData.getCoins().map { coins ->
             Result.Success(coins.map { coin ->
                 Coin(
@@ -71,23 +89,4 @@ class CoinsRepositoryImpl(
         }
     }
 
-    override fun saveCoin(coin: Coin): Completable {
-        return localData.saveCoins(
-            LocalCoin(
-                id = coin.id,
-                symbol = coin.symbol,
-                name = coin.name
-            )
-        )
-    }
-
-    override fun deleteCoin(coin: Coin): Completable {
-        return localData.deleteCoin(
-            LocalCoin(
-                id = coin.id,
-                symbol = coin.symbol,
-                name = coin.name
-            )
-        )
-    }
 }
