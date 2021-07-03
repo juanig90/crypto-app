@@ -12,7 +12,10 @@ class CoinsRepositoryImpl(
     private val remoteData: RemoteDataSource): CoinsRepository {
 
     override fun getCoins(local: Boolean): Single<Result<List<Coin>>> {
-        return if(local) getLocalCoins() else getAllCoins()
+        return if (local)
+            getLocalCoins().map { Result.Success(it) }
+        else
+            getAllCoins()
     }
 
     override fun getCoinDetail(id: String): Single<Result<CoinDetail>> {
@@ -56,36 +59,34 @@ class CoinsRepositoryImpl(
     }
 
     private fun getAllCoins(): Single<Result<List<Coin>>> {
-        return Single.zip(getLocalCoins(), getRemoteCoins()) { localResult, remoteResult ->
-            val local = (localResult as Result.Success).data
-            val remote = (remoteResult as Result.Success).data
+        return Single.zip(getLocalCoins(), getRemoteCoins()) { local, remote ->
             val data = (local + remote).distinctBy { coin -> coin.id }
             Result.Success(data)
         }
     }
 
-    private fun getRemoteCoins(): Single<Result<List<Coin>>> {
+    private fun getRemoteCoins(): Single<List<Coin>> {
         return remoteData.getCoins().map { coins ->
-            Result.Success(coins.map { coin ->
+            coins.map { coin ->
                 Coin(
                     id = coin.id,
                     symbol = coin.symbol,
                     name = coin.name
                 )
-            })
+            }
         }
     }
 
-    private fun getLocalCoins(): Single<Result<List<Coin>>> {
+    private fun getLocalCoins(): Single<List<Coin>> {
         return localData.getCoins().map { coins ->
-            Result.Success(coins.map { localCoin ->
+            coins.map { localCoin ->
                 Coin(
                     id = localCoin.id,
                     symbol = localCoin.symbol,
                     name = localCoin.name,
                     isFavorite = true
                 )
-            })
+            }
         }
     }
 
