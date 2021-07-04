@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cryptoapp.data.Result
-import com.example.cryptoapp.domain.entity.Coin
+import com.example.cryptoapp.domain.entity.OptionItemUI
+import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
-import com.example.cryptoapp.presentation.CoinsViewModel.CoinUI.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import javax.inject.Inject
@@ -18,11 +18,14 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
 
     private val compositeDisposable = CompositeDisposable()
 
-    val liveCoins: LiveData<CoinUI>
+    val liveCoins: LiveData<List<OptionItemUI>>
         get() = mutableLiveCoins
 
-    val liveCoin: LiveData<Coin>
-        get() = mutableLiveCoin
+    val liveFavorites: LiveData<List<FavoriteItemUI>>
+        get() = mutableLiveFavorites
+
+    val liveCoinSelected: LiveData<String>
+        get() = mutableLiveCoinSelected
 
     val liveLoading: LiveData<Boolean>
         get() = mutableLiveLoading
@@ -30,62 +33,67 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
     val liveError: LiveData<String>
         get() = mutableLiveError
 
-    private val mutableLiveCoins = MutableLiveData<CoinUI>()
+    private val mutableLiveCoins = MutableLiveData<List<OptionItemUI>>()
+
+    private val mutableLiveFavorites = MutableLiveData<List<FavoriteItemUI>>()
+
+    private val mutableLiveCoinSelected = MutableLiveData<String>()
 
     private val mutableLiveLoading = MutableLiveData<Boolean>()
 
     private val mutableLiveError = MutableLiveData<String>()
-
-    private val mutableLiveCoin = MutableLiveData<Coin>()
-
-    fun onLoadCoins(local: Boolean = false) {
-        coinsUseCase.getCoins(local)
-            .doOnSubscribe { mutableLiveLoading.value = true }
-            .doOnTerminate { mutableLiveLoading.value = false }
-            .subscribe({ result ->
-                Log.d(TAG, "onLoadCoins:onResult $result")
-                when(result) {
-                    is Result.Success -> {
-                        if(local)
-                            mutableLiveCoins.value = CardUI(result.data)
-                        else
-                            mutableLiveCoins.value = SwitchUI(result.data)
-                    }
-                    is Result.Error -> mutableLiveError.value = result.msg
-                }
-            }, {
-                Log.e(TAG, "onLoadCoins:onErrorSubscribe ${it.localizedMessage}")
-            }).addTo(compositeDisposable)
-    }
-
-    fun onSwitchChanged(coin: Coin, value: Boolean) {
-        if (value)
-            coinsUseCase.saveCoin(coin).subscribe({
-                Log.d(TAG, "onSwitchChanged save successfully")
-            }, {
-                Log.e(TAG, "onSwitchChanged save error ${it.localizedMessage}")
-            }).addTo(compositeDisposable)
-        else
-            coinsUseCase.deleteCoin(coin).subscribe({
-                Log.d(TAG, "onSwitchChanged delete successfully")
-            }, {
-                Log.e(TAG, "onSwitchChanged delete error ${it.localizedMessage}")
-            }).addTo(compositeDisposable)
-    }
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
     }
 
-    fun onCoinSelected(coin: Coin) {
-        mutableLiveCoin.value = coin
+    fun onLoadCoins() {
+        coinsUseCase.getOptionItems()
+            .doOnSubscribe { mutableLiveLoading.value = true }
+            .doOnTerminate { mutableLiveLoading.value = false }
+            .subscribe({ result ->
+                Log.d(TAG, "onLoadCoins:onResult $result")
+                when(result) {
+                    is Result.Success -> mutableLiveCoins.value = result.data
+                    is Result.Error -> mutableLiveError.value = result.msg
+                }
+            }, {
+                Log.e(TAG, "onLoadCoins:onError ${it.localizedMessage}")
+            }).addTo(compositeDisposable)
     }
 
-    sealed class CoinUI(val coins: List<Coin>) {
+    fun onLoadFavorites() {
+        coinsUseCase.getFavoriteItems()
+            .doOnSubscribe { mutableLiveLoading.value = true }
+            .doOnTerminate { mutableLiveLoading.value = false }
+            .subscribe({ result ->
+                when(result) {
+                    is Result.Success -> mutableLiveFavorites.value = result.data
+                    is Result.Error -> mutableLiveError.value = result.msg
+                }
+            }, {
+                Log.e(TAG, "onLoadFavorites:onError ${it.localizedMessage}")
+            }).addTo(compositeDisposable)
+    }
 
-        class CardUI(coins: List<Coin>) : CoinUI(coins)
-        class SwitchUI(coins: List<Coin>) : CoinUI(coins)
+    fun onSwitchChanged(item: OptionItemUI, value: Boolean) {
+        if (value)
+            coinsUseCase.saveFavorite(item).subscribe({
+                Log.d(TAG, "onSwitchChanged save successfully")
+            }, {
+                Log.e(TAG, "onSwitchChanged save error ${it.localizedMessage}")
+            }).addTo(compositeDisposable)
+        else
+            coinsUseCase.removeFavorite(item).subscribe({
+                Log.d(TAG, "onSwitchChanged delete successfully")
+            }, {
+                Log.e(TAG, "onSwitchChanged delete error ${it.localizedMessage}")
+            }).addTo(compositeDisposable)
+    }
+
+    fun onCoinSelected(id: String) {
+        mutableLiveCoinSelected.value = id
     }
 
 }
