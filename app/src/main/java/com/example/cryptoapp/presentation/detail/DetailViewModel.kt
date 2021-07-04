@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cryptoapp.data.Result
-import com.example.cryptoapp.domain.entity.CoinDetail
+import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -15,7 +15,7 @@ class DetailViewModel @Inject constructor(private val useCase: CoinsUseCase): Vi
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val mutableLiveData = MutableLiveData<CoinDetail>()
+    private val mutableLiveData = MutableLiveData<DetailUI>()
 
     private val mutableLiveLoading = MutableLiveData<Boolean>()
 
@@ -23,12 +23,12 @@ class DetailViewModel @Inject constructor(private val useCase: CoinsUseCase): Vi
 
     val liveDataError: LiveData<String> = mutableLiveError
 
-    val liveData: LiveData<CoinDetail> = mutableLiveData
+    val liveData: LiveData<DetailUI> = mutableLiveData
 
     val liveLoadingData = mutableLiveLoading
 
     fun getDetail(id: String) {
-        useCase.getCoinDetail(id)
+        useCase.getDetail(id)
             .doOnSubscribe {
                 mutableLiveLoading.value = true
             }

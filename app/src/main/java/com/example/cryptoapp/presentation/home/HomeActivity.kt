@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityHomeBinding
-import com.example.cryptoapp.presentation.CoinsAdapter
 import com.example.cryptoapp.presentation.CoinsViewModel
 import com.example.cryptoapp.presentation.GridItemDecoration
-import com.example.cryptoapp.presentation.coins.CoinsActivity
+import com.example.cryptoapp.presentation.coins.ChooseFavoritesActivity
 import com.example.cryptoapp.presentation.detail.DetailActivity
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetView
@@ -39,14 +38,17 @@ class HomeActivity : AppCompatActivity() {
                 addItemDecoration(GridItemDecoration())
             }
             activityHomeFloatingButton.setOnClickListener {
-                CoinsActivity.startActivity(this@HomeActivity)
+                ChooseFavoritesActivity.startActivity(this@HomeActivity)
             }
             viewModel.apply {
-                liveCoins.observe(this@HomeActivity, { coinUI ->
-                activityHomeRecycler.adapter = CoinsAdapter(viewModel, coinUI)
-            })
-                liveCoin.observe(this@HomeActivity, {
-                   DetailActivity.startActivity(this@HomeActivity, it.id)
+                liveLoading.observe(this@HomeActivity, {
+                    isLoading = it
+                })
+                liveFavorites.observe(this@HomeActivity, { items ->
+                    activityHomeRecycler.adapter = FavoriteItemAdapter(viewModel, items)
+                })
+                liveCoinSelected.observe(this@HomeActivity, { id ->
+                    DetailActivity.startActivity(this@HomeActivity, id)
                 })
             }
         }
@@ -55,7 +57,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.onLoadCoins(true)
+        viewModel.onLoadFavorites()
     }
 
     private fun showUseCase() {
