@@ -1,8 +1,9 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
-import com.example.cryptoapp.domain.entity.Coin
-import com.example.cryptoapp.domain.entity.CoinDetail
+import com.example.cryptoapp.domain.entity.OptionItemUI
+import com.example.cryptoapp.domain.entity.DetailUI
+import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -11,21 +12,28 @@ class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
     private val remoteData: RemoteDataSource): CoinsRepository {
 
-    override fun getCoins(local: Boolean): Single<Result<List<Coin>>> {
-        return if (local)
-            getLocalCoins().map { Result.Success(it) }
-        else
-            getAllCoins()
+    override fun getOptionItems(): Single<Result<List<OptionItemUI>>> {
+        val favoritesObservable = getFavoritesObservable().map { favorites ->
+            favorites.map { OptionItemUI(it.id, it.symbol, true) }
+        }
+        return Single.zip(favoritesObservable, getRemoteCoins()) { favorites, remote ->
+            val data = (favorites + remote).distinctBy { coin -> coin.symbol }
+            Result.Success(data)
+        }
     }
 
-    override fun getCoinDetail(id: String): Single<Result<CoinDetail>> {
+    override fun getFavoriteItems(): Single<Result<List<FavoriteItemUI>>> {
+        return getFavoritesObservable().map { Result.Success(it) }
+    }
+
+    override fun getDetail(id: String): Single<Result<DetailUI>> {
        val detail = remoteData.getDetailCoin(id)
        val historical = remoteData.getHistoricalPrices(id).map { remoteHistorical ->
            remoteHistorical.prices.map { it[1] as Float }
        }
        return Single.zip(detail, historical) { coin, prices ->
            Result.Success(
-               CoinDetail(
+               DetailUI(
                    name = coin.name,
                    percentageChange24h = coin.marketData.percentageChange24h.eur,
                    percentageChange1w = coin.marketData.percentageChange7d.eur,
@@ -38,54 +46,26 @@ class CoinsRepositoryImpl(
        }
     }
 
-    override fun saveCoin(coin: Coin): Completable {
-        return localData.saveCoins(
-            LocalCoin(
-                id = coin.id,
-                symbol = coin.symbol,
-                name = coin.name
-            )
-        )
+    override fun saveFavorite(item: OptionItemUI): Completable {
+        return localData.saveCoins(LocalCoin(item.id, item.symbol))
     }
 
-    override fun deleteCoin(coin: Coin): Completable {
-        return localData.deleteCoin(
-            LocalCoin(
-                id = coin.id,
-                symbol = coin.symbol,
-                name = coin.name
-            )
-        )
+    override fun removeFavorite(item: OptionItemUI): Completable {
+        return localData.deleteCoin(LocalCoin(item.id, item.symbol))
     }
 
-    private fun getAllCoins(): Single<Result<List<Coin>>> {
-        return Single.zip(getLocalCoins(), getRemoteCoins()) { local, remote ->
-            val data = (local + remote).distinctBy { coin -> coin.id }
-            Result.Success(data)
-        }
-    }
-
-    private fun getRemoteCoins(): Single<List<Coin>> {
+    private fun getRemoteCoins(): Single<List<OptionItemUI>> {
         return remoteData.getCoins().map { coins ->
             coins.map { coin ->
-                Coin(
-                    id = coin.id,
-                    symbol = coin.symbol,
-                    name = coin.name
-                )
+                OptionItemUI(coin.id, coin.symbol, false)
             }
         }
     }
 
-    private fun getLocalCoins(): Single<List<Coin>> {
+    private fun getFavoritesObservable(): Single<List<FavoriteItemUI>> {
         return localData.getCoins().map { coins ->
             coins.map { localCoin ->
-                Coin(
-                    id = localCoin.id,
-                    symbol = localCoin.symbol,
-                    name = localCoin.name,
-                    isFavorite = true
-                )
+                FavoriteItemUI(localCoin.id, localCoin.symbol)
             }
         }
     }
