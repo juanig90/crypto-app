@@ -1,6 +1,6 @@
 package com.example.cryptoapp.domain.entity
 
-data class CoinDetail(
+data class DetailUI(
     val name: String,
     val percentageChange24h: Float?,
     val percentageChange1w: Float?,
