@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.FavoriteItemBinding
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
-import com.example.cryptoapp.presentation.CoinsViewModel
 import com.example.cryptoapp.presentation.home.FavoriteItemAdapter.FavoriteViewHolder
 
-class FavoriteItemAdapter(private val vm: CoinsViewModel,
+class FavoriteItemAdapter(private val vm: HomeViewModel,
                           private val items: List<FavoriteItemUI>): RecyclerView.Adapter<FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteItemAdapter.FavoriteViewHolder {

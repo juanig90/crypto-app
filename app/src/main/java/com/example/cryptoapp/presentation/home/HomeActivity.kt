@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityHomeBinding
-import com.example.cryptoapp.presentation.CoinsViewModel
 import com.example.cryptoapp.presentation.GridItemDecoration
 import com.example.cryptoapp.presentation.coins.ChooseFavoritesActivity
 import com.example.cryptoapp.presentation.detail.DetailActivity
@@ -24,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<CoinsViewModel> { viewModelFactory }
+    private val viewModel by viewModels<HomeViewModel> { viewModelFactory }
 
     private lateinit var binding: ActivityHomeBinding
 
