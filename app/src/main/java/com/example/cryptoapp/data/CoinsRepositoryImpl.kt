@@ -1,6 +1,7 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
+import com.example.cryptoapp.domain.ErrorMapper
 import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
@@ -10,7 +11,9 @@ import io.reactivex.rxjava3.core.Single
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
-    private val remoteData: RemoteDataSource): CoinsRepository {
+    private val remoteData: RemoteDataSource,
+    private val errorMapper: ErrorMapper
+): CoinsRepository {
 
     override fun getOptionItems(): Single<Result<List<OptionItemUI>>> {
         val favoritesObservable = getFavoritesObservable().map { favorites ->
