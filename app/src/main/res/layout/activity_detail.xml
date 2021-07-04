@@ -8,7 +8,7 @@
 
         <variable
             name="coin"
-            type="com.example.cryptoapp.domain.entity.CoinDetail" />
+            type="com.example.cryptoapp.domain.entity.DetailUI" />
 
         <variable
             name="price24"
