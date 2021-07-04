@@ -1,7 +1,7 @@
 package com.example.cryptoapp.presentation.coins.di
 
 import com.example.cryptoapp.di.ActivityScope
-import com.example.cryptoapp.presentation.coins.CoinsActivity
+import com.example.cryptoapp.presentation.coins.ChooseFavoritesActivity
 import dagger.Subcomponent
 
 @ActivityScope
@@ -13,5 +13,5 @@ interface CoinsComponent {
         fun create(): CoinsComponent
     }
 
-    fun inject(activity: CoinsActivity)
+    fun inject(activity: ChooseFavoritesActivity)
 }
