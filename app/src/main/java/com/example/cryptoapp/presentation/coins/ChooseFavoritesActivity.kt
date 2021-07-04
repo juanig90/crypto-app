@@ -15,35 +15,34 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
-import com.example.cryptoapp.databinding.ActivityCoinsBinding
+import com.example.cryptoapp.databinding.ActivityChooseFavoriteBinding
 import com.example.cryptoapp.domain.extension.showSnackbar
-import com.example.cryptoapp.presentation.CoinsAdapter
 import com.example.cryptoapp.presentation.CoinsViewModel
 import javax.inject.Inject
 
-class CoinsActivity : AppCompatActivity() {
+class ChooseFavoritesActivity : AppCompatActivity() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<CoinsViewModel> { viewModelFactory }
 
-    private lateinit var binding: ActivityCoinsBinding
+    private lateinit var binding: ActivityChooseFavoriteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as CryptoApp).application.coinsComponent().create().inject(this)
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_choose_favorite)
         binding.activityCoinsRecycler.addItemDecoration(DividerItemDecoration(baseContext, DividerItemDecoration.VERTICAL))
         setSupportActionBar(binding.activityCoinToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         with(viewModel) {
-            liveCoins.observe(this@CoinsActivity, { coinUI ->
-                binding.activityCoinsRecycler.adapter = CoinsAdapter(this, coinUI)
+            liveCoins.observe(this@ChooseFavoritesActivity, { items ->
+                binding.activityCoinsRecycler.adapter = OptionItemAdapter(viewModel, items)
             })
-            liveLoading.observe(this@CoinsActivity, { isLoading ->
+            liveLoading.observe(this@ChooseFavoritesActivity, { isLoading ->
                 binding.isLoading = isLoading
             })
-            liveError.observe(this@CoinsActivity, { msg ->
+            liveError.observe(this@ChooseFavoritesActivity, { msg ->
                 showSnackbar(binding.root, msg) {
                     viewModel.onLoadCoins()
                 }
@@ -85,7 +84,7 @@ class CoinsActivity : AppCompatActivity() {
     companion object {
 
         fun startActivity(context: Activity) {
-            Intent(context, CoinsActivity::class.java).apply {
+            Intent(context, ChooseFavoritesActivity::class.java).apply {
                 context.startActivity(this)
             }
         }
