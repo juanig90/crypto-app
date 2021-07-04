@@ -1,4 +1,4 @@
-package com.example.cryptoapp.presentation
+package com.example.cryptoapp.presentation.coins.di
 
 import android.util.Log
 import androidx.lifecycle.LiveData

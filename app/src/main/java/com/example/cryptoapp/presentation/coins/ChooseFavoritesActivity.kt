@@ -17,7 +17,8 @@ import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityChooseFavoriteBinding
 import com.example.cryptoapp.domain.extension.showSnackbar
-import com.example.cryptoapp.presentation.CoinsViewModel
+import com.example.cryptoapp.presentation.coins.di.CoinsViewModel
+
 import javax.inject.Inject
 
 class ChooseFavoritesActivity : AppCompatActivity() {
