@@ -57,8 +57,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesCoinsUseCase(coinsRepository: CoinsRepository, errorMapper: ErrorMapper): CoinsUseCase {
-        return CoinsUseCaseImpl(coinsRepository, errorMapper)
+    fun providesCoinsUseCase(coinsRepository: CoinsRepository): CoinsUseCase {
+        return CoinsUseCaseImpl(coinsRepository)
     }
 
     @Singleton
