@@ -15,7 +15,7 @@ class CoinsRepositoryImpl(
 ): CoinsRepository {
 
     override suspend fun getOptionItems(): Flow<Result<List<OptionItemUI>>> {
-        val favoritesFlow = getFavoritesObservable().map { favorites ->
+        val favoritesFlow = getFavoritesFlow().map { favorites ->
             favorites.map { OptionItemUI(it.id, it.symbol, true) }
         }
         return combine(favoritesFlow, getRemoteCoins()) { favorites, remote ->
@@ -51,7 +51,7 @@ class CoinsRepositoryImpl(
         }
     }
 
-    private suspend fun getFavoritesObservable(): Flow<List<FavoriteItemUI>> {
+    private suspend fun getFavoritesFlow(): Flow<List<FavoriteItemUI>> {
         return localData.getCoins().map { coins ->
             coins.map { FavoriteItemUI(it.id, it.symbol) }
         }
