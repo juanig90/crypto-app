@@ -8,7 +8,7 @@
 
         <variable
             name="coin"
-            type="com.example.cryptoapp.domain.entity.CoinDetail" />
+            type="com.example.cryptoapp.domain.entity.DetailUI" />
 
         <variable
             name="price24"
@@ -25,10 +25,6 @@
         <variable
             name="circulating"
             type="String"/>
-
-        <variable
-            name="hasData"
-            type="Boolean" />
 
         <variable
             name="loading"
@@ -85,7 +81,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:visibility="@{hasData}">
+                    app:visibility="@{coin != null}">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"

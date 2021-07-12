@@ -1,8 +1,11 @@
 package com.example.cryptoapp.data
 
+import com.example.cryptoapp.data.entity.LocalCoin
 import com.example.cryptoapp.data.entity.RemoteCoinDetail
-import com.example.cryptoapp.domain.entity.Coin
-import com.example.cryptoapp.domain.entity.CoinDetail
+import com.example.cryptoapp.domain.ErrorMapper
+import com.example.cryptoapp.domain.entity.OptionItemUI
+import com.example.cryptoapp.domain.entity.DetailUI
+import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -11,47 +14,35 @@ import kotlinx.coroutines.flow.map
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
-    private val remoteData: RemoteDataSource): CoinsRepository {
+    private val remoteData: RemoteDataSource,
+    private val errorMapper: ErrorMapper
+): CoinsRepository {
 
-    override suspend fun getCoins(local: Boolean): Flow<Result<List<Coin>>> {
-        return getRemoteCoins().flowOn(Dispatchers.IO)
-    }
-
-    override suspend fun getCoinDetail(id: String): Flow<Result<CoinDetail>> {
+    override suspend fun getOptionItems(): Flow<Result<List<OptionItemUI>>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveCoin(coin: Coin) {
+    override suspend fun getFavoriteItems(): Flow<Result<List<FavoriteItemUI>>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteCoin(coin: Coin) {
+    override suspend fun getDetail(id: String): Flow<Result<DetailUI>> {
         TODO("Not yet implemented")
     }
 
-    private fun hasData(coin: RemoteCoinDetail): Boolean {
-        return coin.marketData.percentageChange24h.eur  != null ||
-               coin.marketData.percentageChange7d.eur   != null ||
-               coin.marketData.percentageChange30d.eur  != null
-    }
-
-    private fun getAllCoins(): Flow<Result<List<Coin>>> {
+    override suspend fun saveFavorite(item: OptionItemUI) {
         TODO("Not yet implemented")
     }
 
-    private suspend fun getRemoteCoins(): Flow<Result<List<Coin>>> {
-        return remoteData.getCoins().map { coins ->
-            Result.Success(coins.map { coin ->
-                Coin(
-                    id = coin.id,
-                    symbol = coin.symbol,
-                    name = coin.name
-                )
-            })
-        }
+    override suspend fun removeFavorite(item: OptionItemUI) {
+        TODO("Not yet implemented")
     }
 
-    private fun getLocalCoins(): Flow<Result<List<Coin>>> {
+    private fun getRemoteCoins(): Flow<List<OptionItemUI>> {
+        TODO("Not yet implemented")
+    }
+
+    private fun getFavoritesObservable(): Flow<List<FavoriteItemUI>> {
         TODO("Not yet implemented")
     }
 

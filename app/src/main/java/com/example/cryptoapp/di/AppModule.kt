@@ -47,15 +47,18 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesRepository(localDataSource: LocalDataSource,
-                           remoteDataSource: RemoteDataSource): CoinsRepository {
-        return CoinsRepositoryImpl(localDataSource, remoteDataSource)
+    fun providesRepository(
+        localDataSource: LocalDataSource,
+        remoteDataSource: RemoteDataSource,
+        errorMapper: ErrorMapper
+    ): CoinsRepository {
+        return CoinsRepositoryImpl(localDataSource, remoteDataSource, errorMapper)
     }
 
     @Singleton
     @Provides
-    fun providesCoinsUseCase(coinsRepository: CoinsRepository, errorMapper: ErrorMapper): CoinsUseCase {
-        return CoinsUseCaseImpl(coinsRepository, errorMapper)
+    fun providesCoinsUseCase(coinsRepository: CoinsRepository): CoinsUseCase {
+        return CoinsUseCaseImpl(coinsRepository)
     }
 
     @Singleton

@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="coin"
-            type="com.example.cryptoapp.domain.entity.Coin" />
+            name="item"
+            type="com.example.cryptoapp.domain.entity.FavoriteItemUI" />
     </data>
 
 <androidx.cardview.widget.CardView
@@ -26,7 +26,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="@{coin.symbol}"
+            android:text="@{item.symbol}"
             tools:text="Bitcoin"/>
 
     </FrameLayout>

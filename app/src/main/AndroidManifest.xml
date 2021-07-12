@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.coins.CoinsActivity"
+        <activity android:name=".presentation.coins.ChooseFavoritesActivity"
             android:theme="@style/Theme.CryptoApp.NoActionBar"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>

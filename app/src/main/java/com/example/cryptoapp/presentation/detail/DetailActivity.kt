@@ -32,7 +32,6 @@ class DetailActivity : AppCompatActivity() {
         viewModel.apply {
             liveData.observe(this@DetailActivity, {
                 binding.run {
-                    hasData = it.hasData
                     coin = it
                     price24 = getString(R.string.percentage_value, it.percentageChange24h?.format(2))
                     price1w = getString(R.string.percentage_value,it.percentageChange1w?.format(2))
