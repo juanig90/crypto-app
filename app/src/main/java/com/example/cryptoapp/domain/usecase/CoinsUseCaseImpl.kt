@@ -11,7 +11,7 @@ import javax.inject.Inject
 class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsRepository) : CoinsUseCase {
 
     override suspend fun getOptionItems(): Flow<Result<List<OptionItemUI>>> {
-        TODO("Not yet implemented")
+        return repository.getOptionItems()
     }
 
     override suspend fun getFavoriteItems(): Flow<Result<List<FavoriteItemUI>>> {
