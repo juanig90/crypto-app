@@ -8,12 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "CoinsViewModel"
 
 class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase) : ViewModel() {
-
 
     val liveCoins: LiveData<List<OptionItemUI>>
         get() = mutableLiveCoins
@@ -30,7 +31,16 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
 
     private val mutableLiveError = MutableLiveData<String>()
 
-    fun onLoadCoins() {}
+    fun onLoadCoins() {
+        viewModelScope.launch {
+            coinsUseCase.getOptionItems().collect { result ->
+                when(result) {
+                    is Result.Success -> mutableLiveCoins.value = result.data
+                    is Result.Error   -> mutableLiveError.value = result.msg
+                }
+            }
+        }
+    }
 
     fun onSwitchChanged(item: OptionItemUI, value: Boolean) {}
 
