@@ -23,10 +23,10 @@ class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsReposito
     }
 
     override suspend fun saveFavorite(item: OptionItemUI) {
-        TODO("Not yet implemented")
+        return repository.saveFavorite(item)
     }
 
     override suspend fun removeFavorite(item: OptionItemUI) {
-        TODO("Not yet implemented")
+        return repository.removeFavorite(item)
     }
 }
