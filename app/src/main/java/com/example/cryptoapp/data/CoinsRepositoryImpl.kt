@@ -1,5 +1,6 @@
 package com.example.cryptoapp.data
 
+import com.example.cryptoapp.data.entity.LocalCoin
 import com.example.cryptoapp.domain.ErrorMapper
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
@@ -36,11 +37,11 @@ class CoinsRepositoryImpl(
     }
 
     override suspend fun saveFavorite(item: OptionItemUI) {
-        TODO("Not yet implemented")
+        return localData.saveCoins(LocalCoin(item.id, item.symbol))
     }
 
     override suspend fun removeFavorite(item: OptionItemUI) {
-        TODO("Not yet implemented")
+        return localData.deleteCoin(LocalCoin(item.id, item.symbol))
     }
 
     private suspend fun getRemoteCoins(): Flow<List<OptionItemUI>> {
@@ -52,8 +53,9 @@ class CoinsRepositoryImpl(
     }
 
     private suspend fun getFavoritesFlow(): Flow<List<FavoriteItemUI>> {
-        return localData.getCoins().map { coins ->
-            coins.map { FavoriteItemUI(it.id, it.symbol) }
+        return flow {
+            val data = localData.getCoins().map { FavoriteItemUI(it.id, it.symbol) }
+            emit(data)
         }
     }
 
