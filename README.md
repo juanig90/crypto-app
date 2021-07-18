@@ -7,7 +7,8 @@ The app shows all crypto market data from [coingecko api](https://www.coingecko.
 
 ## Tech stack
 - [Kotlin](https://kotlinlang.org/)
-- [RxJava](https://github.com/ReactiveX/RxJava) a library for composing asynchronous and event-based programs by using observable sequences
+- [Coroutines](https://developer.android.com/kotlin/coroutines) concurrency design pattern to simplify code that executes asynchronously
+- [Flow](https://developer.android.com/kotlin/flow) stream of data that can be computed asynchronously
 - [Dagger 2](https://dagger.dev/dev-guide/android.html) for dependency injection
 - [Retrofit](https://github.com/square/retrofit) a type-safe HTTP client for Android 
 - [Moshi](https://github.com/square/moshi/) - A modern JSON library for Kotlin and Java
