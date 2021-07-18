@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.OptionItemBinding
 import com.example.cryptoapp.domain.entity.OptionItemUI
-import com.example.cryptoapp.presentation.coins.di.CoinsViewModel
 
 class OptionItemAdapter(private val vm: CoinsViewModel,
                         private val items: List<OptionItemUI>): RecyclerView.Adapter<OptionItemAdapter.ChooseViewHolder>() {
