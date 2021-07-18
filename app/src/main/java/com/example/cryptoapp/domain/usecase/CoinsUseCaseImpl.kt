@@ -15,7 +15,7 @@ class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsReposito
     }
 
     override suspend fun getFavoriteItems(): Flow<Result<List<FavoriteItemUI>>> {
-        TODO("Not yet implemented")
+        return repository.getFavoriteItems()
     }
 
     override suspend fun getDetail(id: String): Flow<Result<DetailUI>> {

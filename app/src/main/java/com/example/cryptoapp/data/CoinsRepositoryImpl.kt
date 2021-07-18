@@ -29,7 +29,12 @@ class CoinsRepositoryImpl(
     }
 
     override suspend fun getFavoriteItems(): Flow<Result<List<FavoriteItemUI>>> {
-        TODO("Not yet implemented")
+        return getFavoritesFlow().map { Result.Success(it) }
+            .catch {
+                val msg = errorMapper.mapError(it)
+                Result.Error(msg)
+            }
+            .flowOn(Dispatchers.IO)
     }
 
     override suspend fun getDetail(id: String): Flow<Result<DetailUI>> {
