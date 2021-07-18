@@ -33,7 +33,29 @@ class CoinsRepositoryImpl(
     }
 
     override suspend fun getDetail(id: String): Flow<Result<DetailUI>> {
-        TODO("Not yet implemented")
+        val detail = remoteData.getDetailCoin(id)
+        val historical = remoteData.getHistoricalPrices(id).map { remoteHistorical ->
+            remoteHistorical.prices.map { it[1] as Float }
+        }
+        return combine(
+            detail,
+            historical
+        ) { coin, prices ->
+            Result.Success(
+                DetailUI(
+                    name = coin.name,
+                    percentageChange24h = coin.marketData.percentageChange24h.eur,
+                    percentageChange1w = coin.marketData.percentageChange7d.eur,
+                    percentageChange1m = coin.marketData.percentageChange30d.eur,
+                    circulating = coin.marketData.circulatingSupply,
+                    image = coin.image.large,
+                    prices = prices
+                )
+            )
+        }.catch {
+            val msg = errorMapper.mapError(it)
+            Result.Error(msg)
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun saveFavorite(item: OptionItemUI) {
