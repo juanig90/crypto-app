@@ -1,6 +1,7 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
+import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.ErrorMapper
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
@@ -19,12 +20,12 @@ class CoinsRepositoryImpl(
         val favoritesFlow = getFavoritesFlow().map { favorites ->
             favorites.map { OptionItemUI(it.id, it.symbol, true) }
         }
-        return combine(favoritesFlow, getRemoteCoins()) { favorites, remote ->
+        return combine<List<OptionItemUI>, List<OptionItemUI>, Result<List<OptionItemUI>>>(favoritesFlow, getRemoteCoins()) { favorites, remote ->
             val data = (favorites + remote).distinctBy { coin -> coin.symbol }
             Result.Success(data)
         }.catch {
             val msg = errorMapper.mapError(it)
-            Result.Error(msg)
+            emit(Result.Error(msg))
         }.flowOn(Dispatchers.IO)
     }
 
@@ -42,7 +43,7 @@ class CoinsRepositoryImpl(
         val historical = remoteData.getHistoricalPrices(id).map { remoteHistorical ->
             remoteHistorical.prices.map { it[1] as Float }
         }
-        return combine(
+        return combine<RemoteCoinDetail, List<Float>, Result<DetailUI>>(
             detail,
             historical
         ) { coin, prices ->
@@ -59,7 +60,7 @@ class CoinsRepositoryImpl(
             )
         }.catch {
             val msg = errorMapper.mapError(it)
-            Result.Error(msg)
+            emit(Result.Error(msg))
         }.flowOn(Dispatchers.IO)
     }
 
