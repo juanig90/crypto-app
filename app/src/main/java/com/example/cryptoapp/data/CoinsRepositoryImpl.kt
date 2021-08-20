@@ -14,12 +14,17 @@ class CoinsRepositoryImpl(
 ): CoinsRepository {
 
     override suspend fun getOptionItems(): Result<List<OptionItemUI>> {
-        val favorites = getFavorites().map { favorite ->
-            OptionItemUI(favorite.id, favorite.symbol, true)
+        return try {
+            val favorites = getFavorites().map { favorite ->
+                OptionItemUI(favorite.id, favorite.symbol, true)
+            }
+            val remoteCoins = getRemoteCoins()
+            val data = (favorites + remoteCoins).distinctBy { coin -> coin.symbol }
+            Result.Success(data)
+        } catch (e: Throwable) {
+            Result.Error(errorMapper.mapError(e))
         }
-        val remoteCoins = getRemoteCoins()
-        val data = (favorites + remoteCoins).distinctBy { coin -> coin.symbol }
-        return Result.Success(data)
+
     }
 
     override suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>> {
@@ -27,9 +32,10 @@ class CoinsRepositoryImpl(
     }
 
     override suspend fun getDetail(id: String): Result<DetailUI> {
-        val detail = remoteData.getDetailCoin(id)
-        val historical = remoteData.getHistoricalPrices(id).prices.map { it[1] as Float }
-        return Result.Success(
+        return try {
+            val detail = remoteData.getDetailCoin(id)
+            val historical = remoteData.getHistoricalPrices(id).prices.map { it[1] as Float }
+            Result.Success(
                 DetailUI(
                     name = detail.name,
                     percentageChange24h = detail.marketData.percentageChange24h.eur,
@@ -40,6 +46,9 @@ class CoinsRepositoryImpl(
                     prices = historical
                 )
             )
+        } catch (e: Throwable) {
+            Result.Error(errorMapper.mapError(e))
+        }
     }
 
     override suspend fun saveFavorite(item: OptionItemUI) {
