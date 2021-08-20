@@ -5,20 +5,19 @@ import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.repository.CoinsRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsRepository) : CoinsUseCase {
 
-    override suspend fun getOptionItems(): Flow<Result<List<OptionItemUI>>> {
+    override suspend fun getOptionItems(): Result<List<OptionItemUI>> {
         return repository.getOptionItems()
     }
 
-    override suspend fun getFavoriteItems(): Flow<Result<List<FavoriteItemUI>>> {
+    override suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>> {
         return repository.getFavoriteItems()
     }
 
-    override suspend fun getDetail(id: String): Flow<Result<DetailUI>> {
+    override suspend fun getDetail(id: String): Result<DetailUI> {
        return repository.getDetail(id)
     }
 

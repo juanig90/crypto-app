@@ -1,14 +1,11 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
-import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.ErrorMapper
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.repository.CoinsRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
@@ -16,52 +13,33 @@ class CoinsRepositoryImpl(
     private val errorMapper: ErrorMapper
 ): CoinsRepository {
 
-    override suspend fun getOptionItems(): Flow<Result<List<OptionItemUI>>> {
-        val favoritesFlow = getFavoritesFlow().map { favorites ->
-            favorites.map { OptionItemUI(it.id, it.symbol, true) }
+    override suspend fun getOptionItems(): Result<List<OptionItemUI>> {
+        val favorites = getFavorites().map { favorite ->
+            OptionItemUI(favorite.id, favorite.symbol, true)
         }
-        return combine<List<OptionItemUI>, List<OptionItemUI>, Result<List<OptionItemUI>>>(favoritesFlow, getRemoteCoins()) { favorites, remote ->
-            val data = (favorites + remote).distinctBy { coin -> coin.symbol }
-            Result.Success(data)
-        }.catch {
-            val msg = errorMapper.mapError(it)
-            emit(Result.Error(msg))
-        }.flowOn(Dispatchers.IO)
+        val remoteCoins = getRemoteCoins()
+        val data = (favorites + remoteCoins).distinctBy { coin -> coin.symbol }
+        return Result.Success(data)
     }
 
-    override suspend fun getFavoriteItems(): Flow<Result<List<FavoriteItemUI>>> {
-        return getFavoritesFlow().map { Result.Success(it) }
-            .catch {
-                val msg = errorMapper.mapError(it)
-                Result.Error(msg)
-            }
-            .flowOn(Dispatchers.IO)
+    override suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>> {
+        return Result.Success(getFavorites())
     }
 
-    override suspend fun getDetail(id: String): Flow<Result<DetailUI>> {
+    override suspend fun getDetail(id: String): Result<DetailUI> {
         val detail = remoteData.getDetailCoin(id)
-        val historical = remoteData.getHistoricalPrices(id).map { remoteHistorical ->
-            remoteHistorical.prices.map { it[1] as Float }
-        }
-        return combine<RemoteCoinDetail, List<Float>, Result<DetailUI>>(
-            detail,
-            historical
-        ) { coin, prices ->
-            Result.Success(
+        val historical = remoteData.getHistoricalPrices(id).prices.map { it[1] as Float }
+        return Result.Success(
                 DetailUI(
-                    name = coin.name,
-                    percentageChange24h = coin.marketData.percentageChange24h.eur,
-                    percentageChange1w = coin.marketData.percentageChange7d.eur,
-                    percentageChange1m = coin.marketData.percentageChange30d.eur,
-                    circulating = coin.marketData.circulatingSupply,
-                    image = coin.image.large,
-                    prices = prices
+                    name = detail.name,
+                    percentageChange24h = detail.marketData.percentageChange24h.eur,
+                    percentageChange1w = detail.marketData.percentageChange7d.eur,
+                    percentageChange1m = detail.marketData.percentageChange30d.eur,
+                    circulating = detail.marketData.circulatingSupply,
+                    image = detail.image.large,
+                    prices = historical
                 )
             )
-        }.catch {
-            val msg = errorMapper.mapError(it)
-            emit(Result.Error(msg))
-        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun saveFavorite(item: OptionItemUI) {
@@ -72,19 +50,14 @@ class CoinsRepositoryImpl(
         return localData.deleteCoin(LocalCoin(item.id, item.symbol))
     }
 
-    private suspend fun getRemoteCoins(): Flow<List<OptionItemUI>> {
-        return remoteData.getCoins().map { coins ->
-            coins.map { coin ->
-                OptionItemUI(coin.id, coin.symbol, false)
-            }
+    private suspend fun getRemoteCoins(): List<OptionItemUI> {
+        return remoteData.getCoins().map { coin ->
+            OptionItemUI(coin.id, coin.symbol, false)
         }
     }
 
-    private suspend fun getFavoritesFlow(): Flow<List<FavoriteItemUI>> {
-        return flow {
-            val data = localData.getCoins().map { FavoriteItemUI(it.id, it.symbol) }
-            emit(data)
-        }
+    private suspend fun getFavorites(): List<FavoriteItemUI> {
+        return localData.getCoins().map { FavoriteItemUI(it.id, it.symbol) }
     }
 
 }

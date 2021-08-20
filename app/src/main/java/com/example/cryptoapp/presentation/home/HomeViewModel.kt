@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,14 +36,13 @@ class HomeViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase) 
 
     fun onLoadFavorites() {
         viewModelScope.launch {
-            coinsUseCase.getFavoriteItems()
-                .onStart { mutableLiveLoading.value = true }
-                .collect { result ->
-                    when(result) {
-                        is Result.Success -> mutableLiveFavorites.value = result.data
-                        is Result.Error -> mutableLiveError.value = result.msg
-                    }
-                }
+            mutableLiveLoading.value = true
+            val result = coinsUseCase.getFavoriteItems()
+            mutableLiveLoading.value = false
+            when(result) {
+                is Result.Success -> mutableLiveFavorites.value = result.data
+                is Result.Error -> mutableLiveError.value = result.msg
+            }
         }
     }
 

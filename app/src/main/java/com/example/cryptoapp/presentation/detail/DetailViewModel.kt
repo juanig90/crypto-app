@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,17 +26,14 @@ class DetailViewModel @Inject constructor(private val useCase: CoinsUseCase): Vi
 
     fun getDetail(id: String) {
         viewModelScope.launch {
-            useCase.getDetail(id)
-                .onStart { mutableLiveLoading.value = true }
-                .collect { result ->
-                    mutableLiveLoading.value = false
-                    when (result) {
-                        is Result.Success -> mutableLiveData.value = result.data
-                        is Result.Error -> mutableLiveError.value = result.msg
-                    }
-                }
+            mutableLiveLoading.value = true
+            val result = useCase.getDetail(id)
+            mutableLiveLoading.value = false
+            when (result) {
+                is Result.Success -> mutableLiveData.value = result.data
+                is Result.Error -> mutableLiveError.value = result.msg
+            }
         }
-
     }
 
 }

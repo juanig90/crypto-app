@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "CoinsViewModel"
@@ -34,14 +32,12 @@ class CoinsViewModel @Inject constructor(private val coinsUseCase: CoinsUseCase)
 
     fun onLoadCoins() {
         viewModelScope.launch {
-            coinsUseCase.getOptionItems()
-                .onStart { mutableLiveLoading.value = true }
-                .collect { result ->
-                    mutableLiveLoading.value = false
-                    when (result) {
-                        is Result.Success -> mutableLiveCoins.value = result.data
-                        is Result.Error -> mutableLiveError.value = result.msg
-                    }
+            mutableLiveLoading.value = true
+            val result = coinsUseCase.getOptionItems()
+            mutableLiveLoading.value = false
+            when (result) {
+                is Result.Success -> mutableLiveCoins.value = result.data
+                is Result.Error -> mutableLiveError.value = result.msg
             }
         }
     }
