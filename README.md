@@ -18,4 +18,4 @@ The app shows all crypto market data from [coingecko api](https://www.coingecko.
   - Data Binding - bind UI components in layouts to data sources
 
 ## New
- Check [this branch](https://github.com/juanig90/crypto-app/tree/asynchronousFlow) out to see another version using coroutines and flow
+ Check [this branch](https://github.com/juanig90/crypto-app/tree/asynchronousFlow) out to see another version using coroutines
