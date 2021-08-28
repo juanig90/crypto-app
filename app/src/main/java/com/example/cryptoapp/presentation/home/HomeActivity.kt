@@ -43,12 +43,11 @@ class HomeActivity : AppCompatActivity() {
                 liveLoading.observe(this@HomeActivity, {
                     isLoading = it
                 })
-                liveFavorites.observe(this@HomeActivity, { items ->
-                    activityHomeRecycler.adapter = FavoriteItemAdapter(viewModel, items)
-                })
-                liveCoinSelected.observe(this@HomeActivity, { id ->
-                    DetailActivity.startActivity(this@HomeActivity, id)
-                })
+                liveFavorites.observe(this@HomeActivity) { items ->
+                    activityHomeRecycler.adapter = FavoriteItemAdapter(items) { id ->
+                        DetailActivity.startActivity(this@HomeActivity, id)
+                    }
+                }
             }
         }
         showUseCase()
