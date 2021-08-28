@@ -1,16 +1,11 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
-import com.example.cryptoapp.data.entity.RemoteCoinDetail
 import com.example.cryptoapp.domain.ErrorMapper
-import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
+import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.repository.CoinsRepository
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class CoinsRepositoryImpl(
     private val localData: LocalDataSource,
@@ -18,88 +13,60 @@ class CoinsRepositoryImpl(
     private val errorMapper: ErrorMapper
 ): CoinsRepository {
 
-    override fun getOptionItems(): Single<Result<List<OptionItemUI>>> {
-        val favoritesObservable = getFavoritesObservable().map { favorites ->
-            favorites.map { OptionItemUI(it.id, it.symbol, true) }
-        }
-        return Single.zip<List<OptionItemUI>, List<OptionItemUI>, Result<List<OptionItemUI>>>(
-            favoritesObservable,
-            getRemoteCoins()
-        ) { favorites, remote ->
-            val data = (favorites + remote).distinctBy { coin -> coin.symbol }
-            Result.Success(data)
-        }.onErrorResumeNext {
-            val msg = errorMapper.mapError(it)
-            Single.just(Result.Error(msg))
-        }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
-
-    override fun getFavoriteItems(): Single<Result<List<FavoriteItemUI>>> {
-        return getFavoritesObservable().map<Result<List<FavoriteItemUI>>> { Result.Success(it) }
-            .onErrorResumeNext {
-                val msg = errorMapper.mapError(it)
-                Single.just(Result.Error(msg))
+    override suspend fun getOptionItems(): Result<List<OptionItemUI>> {
+        return try {
+            val favorites = getFavorites().map { favorite ->
+                OptionItemUI(favorite.id, favorite.symbol, true)
             }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            val remoteCoins = getRemoteCoins()
+            val data = (favorites + remoteCoins).distinctBy { coin -> coin.symbol }
+            Result.Success(data)
+        } catch (e: Throwable) {
+            Result.Error(errorMapper.mapError(e))
+        }
+
     }
 
-    override fun getDetail(id: String): Single<Result<DetailUI>> {
-        val detail = remoteData.getDetailCoin(id)
-        val historical = remoteData.getHistoricalPrices(id).map { remoteHistorical ->
-            remoteHistorical.prices.map { it[1] as Float }
-        }
-        return Single.zip<RemoteCoinDetail, List<Float>, Result<DetailUI>>(
-            detail,
-            historical
-        ) { coin, prices ->
+    override suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>> {
+        return Result.Success(getFavorites())
+    }
+
+    override suspend fun getDetail(id: String): Result<DetailUI> {
+        return try {
+            val detail = remoteData.getDetailCoin(id)
+            val historical = remoteData.getHistoricalPrices(id).prices.map { it[1] as Float }
             Result.Success(
                 DetailUI(
-                    name = coin.name,
-                    percentageChange24h = coin.marketData.percentageChange24h.eur,
-                    percentageChange1w = coin.marketData.percentageChange7d.eur,
-                    percentageChange1m = coin.marketData.percentageChange30d.eur,
-                    circulating = coin.marketData.circulatingSupply,
-                    image = coin.image.large,
-                    prices = prices
+                    name = detail.name,
+                    percentageChange24h = detail.marketData.percentageChange24h.eur,
+                    percentageChange1w = detail.marketData.percentageChange7d.eur,
+                    percentageChange1m = detail.marketData.percentageChange30d.eur,
+                    circulating = detail.marketData.circulatingSupply,
+                    image = detail.image.large,
+                    prices = historical
                 )
             )
-        }.onErrorResumeNext {
-            val msg = errorMapper.mapError(it)
-            Single.just(Result.Error(msg))
+        } catch (e: Throwable) {
+            Result.Error(errorMapper.mapError(e))
         }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun saveFavorite(item: OptionItemUI): Completable {
+    override suspend fun saveFavorite(item: OptionItemUI) {
         return localData.saveCoins(LocalCoin(item.id, item.symbol))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun removeFavorite(item: OptionItemUI): Completable {
+    override suspend fun removeFavorite(item: OptionItemUI) {
         return localData.deleteCoin(LocalCoin(item.id, item.symbol))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
     }
 
-    private fun getRemoteCoins(): Single<List<OptionItemUI>> {
-        return remoteData.getCoins().map { coins ->
-            coins.map { coin ->
-                OptionItemUI(coin.id, coin.symbol, false)
-            }
+    private suspend fun getRemoteCoins(): List<OptionItemUI> {
+        return remoteData.getCoins().map { coin ->
+            OptionItemUI(coin.id, coin.symbol, false)
         }
     }
 
-    private fun getFavoritesObservable(): Single<List<FavoriteItemUI>> {
-        return localData.getCoins().map { coins ->
-            coins.map { localCoin ->
-                FavoriteItemUI(localCoin.id, localCoin.symbol)
-            }
-        }
+    private suspend fun getFavorites(): List<FavoriteItemUI> {
+        return localData.getCoins().map { FavoriteItemUI(it.id, it.symbol) }
     }
 
 }

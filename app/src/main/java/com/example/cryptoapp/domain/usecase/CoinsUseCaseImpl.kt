@@ -5,29 +5,27 @@ import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.repository.CoinsRepository
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class CoinsUseCaseImpl @Inject constructor(private val repository: CoinsRepository) : CoinsUseCase {
 
-    override fun getOptionItems(): Single<Result<List<OptionItemUI>>> {
+    override suspend fun getOptionItems(): Result<List<OptionItemUI>> {
         return repository.getOptionItems()
     }
 
-    override fun getFavoriteItems(): Single<Result<List<FavoriteItemUI>>> {
+    override suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>> {
         return repository.getFavoriteItems()
     }
 
-    override fun getDetail(id: String): Single<Result<DetailUI>> {
-        return repository.getDetail(id)
+    override suspend fun getDetail(id: String): Result<DetailUI> {
+       return repository.getDetail(id)
     }
 
-    override fun saveFavorite(item: OptionItemUI): Completable {
+    override suspend fun saveFavorite(item: OptionItemUI) {
         return repository.saveFavorite(item)
     }
 
-    override fun removeFavorite(item: OptionItemUI): Completable {
+    override suspend fun removeFavorite(item: OptionItemUI) {
         return repository.removeFavorite(item)
     }
 }

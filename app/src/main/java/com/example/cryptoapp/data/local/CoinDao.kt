@@ -2,19 +2,17 @@ package com.example.cryptoapp.data.local
 
 import androidx.room.*
 import com.example.cryptoapp.data.entity.LocalCoin
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface CoinDao {
 
     @Query("SELECT * FROM coin")
-    fun getAll(): Single<List<LocalCoin>>
+    suspend fun getAll(): List<LocalCoin>
 
     @Insert( onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg coins: LocalCoin): Completable
+    suspend fun insertAll(vararg coins: LocalCoin)
 
     @Delete
-    fun delete(coin: LocalCoin): Completable
+    suspend fun delete(coin: LocalCoin)
 
 }

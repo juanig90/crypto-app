@@ -1,17 +1,16 @@
 package com.example.cryptoapp.domain.repository
 
 import com.example.cryptoapp.data.Result
-import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.entity.FavoriteItemUI
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+import com.example.cryptoapp.domain.entity.OptionItemUI
+
 
 interface CoinsRepository {
 
-    fun getOptionItems(): Single<Result<List<OptionItemUI>>>
-    fun getFavoriteItems(): Single<Result<List<FavoriteItemUI>>>
-    fun saveFavorite(item: OptionItemUI): Completable
-    fun removeFavorite(item: OptionItemUI): Completable
-    fun getDetail(id: String): Single<Result<DetailUI>>
+    suspend fun getOptionItems(): Result<List<OptionItemUI>>
+    suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>>
+    suspend fun saveFavorite(item: OptionItemUI)
+    suspend fun removeFavorite(item: OptionItemUI)
+    suspend fun getDetail(id: String): Result<DetailUI>
 }
