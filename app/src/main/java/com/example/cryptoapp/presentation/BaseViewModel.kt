@@ -3,8 +3,11 @@ package com.example.cryptoapp.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.cryptoapp.data.Result
+import kotlinx.coroutines.launch
 
-open class BaseViewModel<T >: ViewModel() {
+open class BaseViewModel<T>: ViewModel() {
 
     private val mutableLiveData = MutableLiveData<T>()
 
@@ -12,13 +15,25 @@ open class BaseViewModel<T >: ViewModel() {
 
     private val mutableLiveError = MutableLiveData<String>()
 
-    protected val liveData: LiveData<T>
+    val liveData: LiveData<T>
         get() = mutableLiveData
 
-    protected val liveLoading: LiveData<Boolean>
+    val liveLoading: LiveData<Boolean>
         get() = mutableLiveLoading
 
-    protected val liveError: LiveData<String>
+    val liveError: LiveData<String>
         get() = mutableLiveError
+
+    protected fun doWork(block: suspend() -> Result<T> ) {
+        viewModelScope.launch {
+            mutableLiveLoading.value = true
+            val result = block()
+            mutableLiveLoading.value = false
+            when (result) {
+                is Result.Success -> mutableLiveData.value = result.data
+                is Result.Error -> mutableLiveError.value = result.msg
+            }
+        }
+    }
 
 }

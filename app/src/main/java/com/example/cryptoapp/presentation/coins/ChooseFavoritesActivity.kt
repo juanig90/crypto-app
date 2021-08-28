@@ -36,7 +36,7 @@ class ChooseFavoritesActivity : AppCompatActivity() {
         setSupportActionBar(binding.activityCoinToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         with(viewModel) {
-            liveCoins.observe(this@ChooseFavoritesActivity, { items ->
+            liveData.observe(this@ChooseFavoritesActivity, { items ->
                 binding.activityCoinsRecycler.adapter = OptionItemAdapter(viewModel, items)
             })
             liveLoading.observe(this@ChooseFavoritesActivity, { isLoading ->

@@ -43,7 +43,7 @@ class HomeActivity : AppCompatActivity() {
                 liveLoading.observe(this@HomeActivity, {
                     isLoading = it
                 })
-                liveFavorites.observe(this@HomeActivity) { items ->
+                liveData.observe(this@HomeActivity) { items ->
                     activityHomeRecycler.adapter = FavoriteItemAdapter(items) { id ->
                         DetailActivity.startActivity(this@HomeActivity, id)
                     }

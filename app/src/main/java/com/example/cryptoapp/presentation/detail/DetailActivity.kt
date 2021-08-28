@@ -40,10 +40,11 @@ class DetailActivity : AppCompatActivity() {
                     activityDetailLineChartView.drawChart(it.prices)
                 }
             })
-            liveLoadingData.observe(this@DetailActivity, {
+
+            liveLoading.observe(this@DetailActivity, {
                 binding.loading = it
             })
-            liveDataError.observe(this@DetailActivity, { msg ->
+            liveError.observe(this@DetailActivity, { msg ->
                 showSnackbar(binding.root, msg) {
                     viewModel.getDetail(id)
                 }
