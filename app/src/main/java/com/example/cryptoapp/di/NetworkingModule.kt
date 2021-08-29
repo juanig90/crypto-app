@@ -1,11 +1,14 @@
 package com.example.cryptoapp.di
 
+import android.content.Context
 import com.example.cryptoapp.BuildConfig
+import com.example.cryptoapp.domain.networking.ConnectivityInterceptor
 import com.example.cryptoapp.domain.networking.NumberAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -18,7 +21,7 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    fun providesHttpClient(): OkHttpClient {
+    fun providesHttpClient(connectivityInterceptor: Interceptor): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level =
             if (BuildConfig.DEBUG)
@@ -26,6 +29,7 @@ object NetworkingModule {
             else
                 HttpLoggingInterceptor.Level.NONE
         return OkHttpClient.Builder()
+            .addInterceptor(connectivityInterceptor)
             .addInterceptor(interceptor)
             .build()
     }
@@ -53,6 +57,12 @@ object NetworkingModule {
             .addConverterFactory(converter)
             .client(okHttpClient)
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun providesConnectivityInterceptor(context: Context): Interceptor {
+       return ConnectivityInterceptor(context)
     }
 
 }
