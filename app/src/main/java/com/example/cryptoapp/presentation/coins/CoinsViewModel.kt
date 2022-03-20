@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.domain.entity.OptionItemUI
 import com.example.cryptoapp.domain.usecase.CoinsUseCase
 import com.example.cryptoapp.presentation.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

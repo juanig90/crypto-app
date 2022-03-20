@@ -6,16 +6,22 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
+import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.databinding.ActivityHomeBinding
 import com.example.cryptoapp.presentation.GridItemDecoration
 import com.example.cryptoapp.presentation.coins.ChooseFavoritesActivity
 import com.example.cryptoapp.presentation.detail.DetailActivity
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetView
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -39,18 +45,30 @@ class HomeActivity : AppCompatActivity() {
             activityHomeFloatingButton.setOnClickListener {
                 ChooseFavoritesActivity.startActivity(this@HomeActivity)
             }
-            viewModel.apply {
-                liveLoading.observe(this@HomeActivity, {
-                    isLoading = it
-                })
-                liveData.observe(this@HomeActivity) { items ->
-                    activityHomeRecycler.adapter = FavoriteItemAdapter(items) { id ->
-                        DetailActivity.startActivity(this@HomeActivity, id)
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.stateData.collect { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                isLoading = result.value
+                            }
+                            is Result.Success -> {
+                                isLoading = false
+                                activityHomeRecycler.adapter =
+                                    FavoriteItemAdapter(result.data) { id ->
+                                        DetailActivity.startActivity(this@HomeActivity, id)
+                                    }
+                            }
+                            is Result.Error -> {
+                                isLoading = false
+                                // Show error view
+                            }
+                        }
                     }
                 }
             }
+            showUseCase()
         }
-        showUseCase()
     }
 
     override fun onResume() {
