@@ -13,8 +13,6 @@ import com.example.cryptoapp.data.remote.RemoteDataSourceImpl
 import com.example.cryptoapp.domain.ErrorMapper
 import com.example.cryptoapp.domain.ErrorMapperImpl
 import com.example.cryptoapp.domain.repository.CoinsRepository
-import com.example.cryptoapp.domain.usecase.CoinsUseCase
-import com.example.cryptoapp.domain.usecase.CoinsUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -54,13 +52,7 @@ object AppModule {
     ): CoinsRepository {
         return CoinsRepositoryImpl(localDataSource, remoteDataSource, errorMapper)
     }
-
-    @Singleton
-    @Provides
-    fun providesCoinsUseCase(coinsRepository: CoinsRepository): CoinsUseCase {
-        return CoinsUseCaseImpl(coinsRepository)
-    }
-
+    
     @Singleton
     @Provides
     fun providesDatabase(context: Context): AppDatabase {
