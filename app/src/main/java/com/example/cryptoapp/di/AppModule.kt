@@ -3,6 +3,7 @@ package com.example.cryptoapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.cryptoapp.data.CoinsRepositoryImpl
+import com.example.cryptoapp.data.ExceptionHandler
 import com.example.cryptoapp.data.LocalDataSource
 import com.example.cryptoapp.data.RemoteDataSource
 import com.example.cryptoapp.data.local.AppDatabase
@@ -39,8 +40,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesDataSource(coinsAPI: CoinAPI): RemoteDataSource {
-        return RemoteDataSourceImpl(coinsAPI)
+    fun providesDataSource(
+        coinsAPI: CoinAPI,
+        exceptionHandler: ExceptionHandler
+    ): RemoteDataSource {
+        return RemoteDataSourceImpl(coinsAPI, exceptionHandler)
     }
 
     @Singleton

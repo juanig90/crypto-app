@@ -2,6 +2,8 @@ package com.example.cryptoapp.di
 
 import android.content.Context
 import com.example.cryptoapp.BuildConfig
+import com.example.cryptoapp.data.ExceptionHandler
+import com.example.cryptoapp.data.ExceptionHandlerImpl
 import com.example.cryptoapp.domain.networking.ConnectivityInterceptor
 import com.example.cryptoapp.domain.networking.NumberAdapter
 import com.squareup.moshi.Moshi
@@ -63,6 +65,12 @@ object NetworkingModule {
     @Provides
     fun providesConnectivityInterceptor(context: Context): Interceptor {
        return ConnectivityInterceptor(context)
+    }
+
+    @Singleton
+    @Provides
+    fun providesErrorHandler(): ExceptionHandler {
+        return ExceptionHandlerImpl()
     }
 
 }
