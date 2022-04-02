@@ -11,8 +11,6 @@ import com.example.cryptoapp.data.local.CoinDao
 import com.example.cryptoapp.data.local.LocalDataSourceImpl
 import com.example.cryptoapp.data.remote.CoinAPI
 import com.example.cryptoapp.data.remote.RemoteDataSourceImpl
-import com.example.cryptoapp.domain.ErrorMapper
-import com.example.cryptoapp.domain.ErrorMapperImpl
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import dagger.Module
 import dagger.Provides
@@ -40,11 +38,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesDataSource(
-        coinsAPI: CoinAPI,
-        exceptionHandler: ExceptionHandler
-    ): RemoteDataSource {
-        return RemoteDataSourceImpl(coinsAPI, exceptionHandler)
+    fun providesDataSource(coinsAPI: CoinAPI): RemoteDataSource {
+        return RemoteDataSourceImpl(coinsAPI)
     }
 
     @Singleton
@@ -52,9 +47,9 @@ object AppModule {
     fun providesRepository(
         localDataSource: LocalDataSource,
         remoteDataSource: RemoteDataSource,
-        errorMapper: ErrorMapper
+        exceptionHandler: ExceptionHandler
     ): CoinsRepository {
-        return CoinsRepositoryImpl(localDataSource, remoteDataSource, errorMapper)
+        return CoinsRepositoryImpl(localDataSource, remoteDataSource, exceptionHandler)
     }
     
     @Singleton
@@ -63,10 +58,5 @@ object AppModule {
         return Room.databaseBuilder(context, AppDatabase::class.java, "crypto-db").build()
     }
 
-    @Singleton
-    @Provides
-    fun providesErrorMapper(context: Context): ErrorMapper {
-        return ErrorMapperImpl(context)
-    }
 
 }
