@@ -1,4 +1,4 @@
-package com.example.cryptoapp.domain.exceptions
+package com.example.cryptoapp.domain.core.exceptions
 
 import java.io.IOException
 

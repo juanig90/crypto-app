@@ -2,7 +2,7 @@ package com.example.cryptoapp.domain.networking
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.example.cryptoapp.domain.exceptions.ConnectivityException
+import com.example.cryptoapp.domain.core.exceptions.ConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.lang.Exception

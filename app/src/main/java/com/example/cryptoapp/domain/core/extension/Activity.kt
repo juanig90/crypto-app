@@ -1,4 +1,4 @@
-package com.example.cryptoapp.domain.extension
+package com.example.cryptoapp.domain.core.extension
 
 import android.app.Activity
 import android.view.View

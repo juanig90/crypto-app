@@ -3,7 +3,6 @@ package com.example.cryptoapp.presentation.detail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +15,8 @@ import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.databinding.ActivityDetailBinding
-import com.example.cryptoapp.domain.extension.format
-import com.example.cryptoapp.domain.extension.showSnackbar
+import com.example.cryptoapp.domain.core.extension.format
+import com.example.cryptoapp.domain.core.extension.showSnackbar
 import com.example.cryptoapp.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

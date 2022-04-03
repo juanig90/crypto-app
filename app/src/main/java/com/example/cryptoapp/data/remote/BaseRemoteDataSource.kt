@@ -1,8 +1,8 @@
 package com.example.cryptoapp.data.remote
 
-import com.example.cryptoapp.domain.exceptions.ClientError
-import com.example.cryptoapp.domain.exceptions.ServerError
-import com.example.cryptoapp.domain.exceptions.UnknownRequestError
+import com.example.cryptoapp.domain.core.exceptions.ClientError
+import com.example.cryptoapp.domain.core.exceptions.ServerError
+import com.example.cryptoapp.domain.core.exceptions.UnknownRequestError
 import retrofit2.HttpException
 
 open class BaseRemoteDataSource {

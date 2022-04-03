@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
@@ -22,7 +21,7 @@ import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.data.Result
 import com.example.cryptoapp.databinding.ActivityChooseFavoriteBinding
-import com.example.cryptoapp.domain.extension.showSnackbar
+import com.example.cryptoapp.domain.core.extension.showSnackbar
 import com.example.cryptoapp.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
