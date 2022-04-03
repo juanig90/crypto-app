@@ -2,7 +2,6 @@ package com.example.cryptoapp.presentation.detail
 
 import com.example.cryptoapp.domain.entity.DetailUI
 import com.example.cryptoapp.domain.usecase.CoinDetailUseCase
-import com.example.cryptoapp.domain.usecase.FavoriteCoinUseCase
 import com.example.cryptoapp.presentation.BaseViewModel
 import javax.inject.Inject
 
