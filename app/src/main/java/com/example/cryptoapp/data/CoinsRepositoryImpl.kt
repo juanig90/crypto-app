@@ -2,7 +2,6 @@ package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.entity.LocalCoin
 import com.example.cryptoapp.domain.entity.DetailUI
-import com.example.cryptoapp.domain.entity.FavoriteItemUI
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.repository.CoinsRepository
 
@@ -13,18 +12,16 @@ class CoinsRepositoryImpl(
 ): CoinsRepository {
 
     override suspend fun getCoins(): Result<List<Coin>> {
-       return exceptionHandler.runCatch {
-           val favorites = getFavorites().map { favorite ->
-               Coin(favorite.id, favorite.symbol, true)
-           }
-           val remoteCoins = getRemoteCoins()
-           val data = (favorites + remoteCoins).distinctBy { coin -> coin.symbol }
-           data
+        return exceptionHandler.runCatch {
+            remoteData.getCoins().map { coin ->
+                Coin(coin.id, coin.symbol, false)
+            }
         }
     }
 
-    override suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>> {
-        return Result.Success(getFavorites())
+    override suspend fun getFavoriteItems(): Result<List<Coin>> {
+        val favorites = localData.getCoins().map { Coin(it.id, it.symbol, true) }
+        return Result.Success(favorites)
     }
 
     override suspend fun getDetail(id: String): Result<DetailUI> {
@@ -51,14 +48,5 @@ class CoinsRepositoryImpl(
         return localData.deleteCoin(LocalCoin(item.id, item.symbol))
     }
 
-    private suspend fun getRemoteCoins(): List<Coin> {
-        return remoteData.getCoins().map { coin ->
-            Coin(coin.id, coin.symbol, false)
-        }
-    }
-
-    private suspend fun getFavorites(): List<FavoriteItemUI> {
-        return localData.getCoins().map { FavoriteItemUI(it.id, it.symbol) }
-    }
 
 }
