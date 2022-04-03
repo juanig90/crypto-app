@@ -2,7 +2,7 @@ package com.example.cryptoapp.presentation.coins
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.domain.entity.OptionItemUI
+import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.usecase.RemoveFavoriteUseCase
 import com.example.cryptoapp.domain.usecase.SaveFavoriteUseCase
 import com.example.cryptoapp.domain.usecase.SelectionCoinUseCase
@@ -16,7 +16,7 @@ class CoinsViewModel @Inject constructor(
     private val selectionCoinUseCase: SelectionCoinUseCase,
     private val saveFavoriteUseCase: SaveFavoriteUseCase,
     private val removeFavoriteUseCase: RemoveFavoriteUseCase
-) : BaseViewModel<List<OptionItemUI>>() {
+) : BaseViewModel<List<Coin>>() {
 
     fun onLoadCoins() {
         doWork {
@@ -24,7 +24,7 @@ class CoinsViewModel @Inject constructor(
         }
     }
 
-    fun onSwitchChanged(item: OptionItemUI, value: Boolean) {
+    fun onSwitchChanged(item: Coin, value: Boolean) {
         Log.d(TAG, "onSwitchChanged ${item.symbol} $value")
         viewModelScope.launch {
                if (value)

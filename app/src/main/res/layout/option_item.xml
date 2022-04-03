@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.cryptoapp.domain.entity.OptionItemUI" />
+            type="com.example.cryptoapp.domain.entity.Coin" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

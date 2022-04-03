@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.OptionItemBinding
-import com.example.cryptoapp.domain.entity.OptionItemUI
+import com.example.cryptoapp.domain.entity.Coin
 
 class OptionItemAdapter(private val vm: CoinsViewModel,
-                        private val items: List<OptionItemUI>): RecyclerView.Adapter<OptionItemAdapter.ChooseViewHolder>() {
+                        private val items: List<Coin>): RecyclerView.Adapter<OptionItemAdapter.ChooseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseViewHolder {
         val binding = OptionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,7 +22,7 @@ class OptionItemAdapter(private val vm: CoinsViewModel,
 
     inner class ChooseViewHolder(private val binding: OptionItemBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: OptionItemUI) {
+        fun bind(item: Coin) {
             binding.run {
                 this.item = item
                 coinItemSwitch.setOnCheckedChangeListener { _, isChecked ->
