@@ -19,7 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
-import com.example.cryptoapp.data.Result
+import com.example.cryptoapp.domain.core.resource.Result
 import com.example.cryptoapp.databinding.ActivityChooseFavoriteBinding
 import com.example.cryptoapp.domain.core.extension.showSnackbar
 import com.example.cryptoapp.presentation.BaseViewModel

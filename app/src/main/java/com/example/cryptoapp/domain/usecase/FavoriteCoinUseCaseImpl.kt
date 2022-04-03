@@ -1,6 +1,6 @@
 package com.example.cryptoapp.domain.usecase
 
-import com.example.cryptoapp.data.Result
+import com.example.cryptoapp.domain.core.resource.Result
 import com.example.cryptoapp.domain.entity.Coin
 import com.example.cryptoapp.domain.repository.CoinsRepository
 import javax.inject.Inject

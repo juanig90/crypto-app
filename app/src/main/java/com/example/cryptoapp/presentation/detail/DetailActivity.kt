@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.cryptoapp.CryptoApp
 import com.example.cryptoapp.R
-import com.example.cryptoapp.data.Result
+import com.example.cryptoapp.domain.core.resource.Result
 import com.example.cryptoapp.databinding.ActivityDetailBinding
 import com.example.cryptoapp.domain.core.extension.format
 import com.example.cryptoapp.domain.core.extension.showSnackbar

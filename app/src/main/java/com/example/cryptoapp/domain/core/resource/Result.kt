@@ -1,4 +1,4 @@
-package com.example.cryptoapp.data
+package com.example.cryptoapp.domain.core.resource
 
 sealed class Result<out T> {
 

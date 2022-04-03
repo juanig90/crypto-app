@@ -2,7 +2,7 @@ package com.example.cryptoapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.data.Result
+import com.example.cryptoapp.domain.core.resource.Result
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -21,7 +21,7 @@ open class BaseViewModel<T>: ViewModel() {
     val sharedEvent: SharedFlow<UIEvent>
         get() = mutableSharedEvent
 
-    protected fun doWork(block: suspend() -> Result<T> ) {
+    protected fun doWork(block: suspend() -> Result<T>) {
         viewModelScope.launch {
             mutableStateData.value = Result.Loading(true)
             val result = block()
