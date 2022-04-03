@@ -10,6 +10,6 @@ class SelectionCoinUseCaseImpl @Inject constructor(
 ) : SelectionCoinUseCase {
 
     override suspend operator fun invoke(): Result<List<Coin>> {
-        return repository.getOptionItems()
+        return repository.getCoins()
     }
 }

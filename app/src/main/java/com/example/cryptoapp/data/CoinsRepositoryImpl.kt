@@ -12,7 +12,7 @@ class CoinsRepositoryImpl(
     private val exceptionHandler: ExceptionHandler
 ): CoinsRepository {
 
-    override suspend fun getOptionItems(): Result<List<Coin>> {
+    override suspend fun getCoins(): Result<List<Coin>> {
        return exceptionHandler.runCatch {
            val favorites = getFavorites().map { favorite ->
                Coin(favorite.id, favorite.symbol, true)

@@ -8,7 +8,7 @@ import com.example.cryptoapp.domain.entity.Coin
 
 interface CoinsRepository {
 
-    suspend fun getOptionItems(): Result<List<Coin>>
+    suspend fun getCoins(): Result<List<Coin>>
     suspend fun getFavoriteItems(): Result<List<FavoriteItemUI>>
     suspend fun saveFavorite(item: Coin)
     suspend fun removeFavorite(item: Coin)
