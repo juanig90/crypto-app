@@ -14,13 +14,13 @@ class CoinsRepositoryImpl(
     override suspend fun getCoins(): Result<List<Coin>> {
         return exceptionHandler.runCatch {
             remoteData.getCoins().map { coin ->
-                Coin(coin.id, coin.symbol, false)
+                Coin(coin.id, coin.symbol)
             }
         }
     }
 
     override suspend fun getFavoriteItems(): Result<List<Coin>> {
-        val favorites = localData.getCoins().map { Coin(it.id, it.symbol, true) }
+        val favorites = localData.getCoins().map { Coin(it.id, it.symbol) }
         return Result.Success(favorites)
     }
 

@@ -26,7 +26,6 @@ class OptionItemAdapter(private val vm: CoinsViewModel,
             binding.run {
                 this.item = item
                 coinItemSwitch.setOnCheckedChangeListener { _, isChecked ->
-                    item.isFavorite = isChecked
                     vm.onSwitchChanged(item, isChecked)
                 }
             }
