@@ -70,7 +70,7 @@ class ChooseFavoritesActivity : AppCompatActivity() {
                 viewModel.sharedEvent.collect { event ->
                     when (event) {
                         is BaseViewModel.UIEvent.SnackBarEvent -> {
-                            showSnackbar(root, event.msg) {
+                            root.showSnackbar(event.msg) {
                                 viewModel.onLoadCoins()
                             }
                         }
