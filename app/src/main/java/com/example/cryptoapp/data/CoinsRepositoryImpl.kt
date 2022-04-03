@@ -20,8 +20,9 @@ class CoinsRepositoryImpl(
     }
 
     override suspend fun getFavoriteItems(): Result<List<Coin>> {
-        val favorites = localData.getCoins().map { Coin(it.id, it.symbol) }
-        return Result.Success(favorites)
+        return exceptionHandler.runCatch {
+            localData.getCoins().map { Coin(it.id, it.symbol) }
+        }
     }
 
     override suspend fun getDetail(id: String): Result<DetailUI> {
