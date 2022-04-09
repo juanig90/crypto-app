@@ -23,8 +23,8 @@ class OptionItemAdapter(private val vm: CoinsViewModel,
     inner class ChooseViewHolder(private val binding: OptionItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Coin) {
-            binding.run {
-                this.item = item
+           with(binding) {
+                coinItemName.text = item.symbol
                 coinItemSwitch.setOnCheckedChangeListener { _, isChecked ->
                     vm.onSwitchChanged(item, isChecked)
                 }
