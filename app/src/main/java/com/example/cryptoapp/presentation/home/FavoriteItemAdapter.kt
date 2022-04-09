@@ -24,9 +24,11 @@ class FavoriteItemAdapter(private val items: List<Coin>,
     inner class FavoriteViewHolder(private val binding: FavoriteItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Coin) {
-            binding.item = item
-            binding.cardCoinView.setOnClickListener {
-                listener(item.id)
+            with(binding) {
+                favoriteItemSymbol.text = item.symbol
+                itemView.setOnClickListener {
+                    listener(item.id)
+                }
             }
         }
     }

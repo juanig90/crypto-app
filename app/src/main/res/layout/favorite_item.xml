@@ -2,34 +2,22 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="item"
-            type="com.example.cryptoapp.domain.entity.Coin" />
-    </data>
-
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <FrameLayout
-        android:id="@+id/card_coin_view"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/favoriteItemSymbol"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        tools:text="Bitcoin" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="@{item.symbol}"
-            tools:text="Bitcoin"/>
-
-    </FrameLayout>
 
 </androidx.cardview.widget.CardView>
 
