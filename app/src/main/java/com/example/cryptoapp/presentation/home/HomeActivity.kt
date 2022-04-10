@@ -33,11 +33,18 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
+    private val adapter by lazy {
+        FavoriteItemAdapter { id ->
+            DetailActivity.startActivity(this@HomeActivity, id)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as CryptoApp).application.homeComponent().create().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         with(binding) {
+            activityHomeRecycler.adapter = adapter
             activityHomeRecycler.run {
                 layoutManager = GridLayoutManager(this@HomeActivity, 2)
                 addItemDecoration(GridItemDecoration())
@@ -54,10 +61,7 @@ class HomeActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 isLoading = false
-                                activityHomeRecycler.adapter =
-                                    FavoriteItemAdapter(result.data) { id ->
-                                        DetailActivity.startActivity(this@HomeActivity, id)
-                                    }
+                                adapter.submitList(result.data)
                             }
                             is Result.Error -> {
                                 isLoading = false

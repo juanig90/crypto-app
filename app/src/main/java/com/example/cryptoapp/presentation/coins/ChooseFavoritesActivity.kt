@@ -36,6 +36,8 @@ class ChooseFavoritesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChooseFavoriteBinding
 
+    private val adapter by lazy { ChoseFavoriteItemAdapter(viewModel) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as CryptoApp).application.coinsComponent().create().inject(this)
         super.onCreate(savedInstanceState)
@@ -44,6 +46,7 @@ class ChooseFavoritesActivity : AppCompatActivity() {
         setSupportActionBar(binding.activityCoinToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         with(binding) {
+            activityCoinsRecycler.adapter = this@ChooseFavoritesActivity.adapter
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.stateData.collect { result ->
@@ -53,10 +56,7 @@ class ChooseFavoritesActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 isLoading = false
-                                activityCoinsRecycler.adapter = ChoseFavoriteItemAdapter(
-                                    viewModel,
-                                    result.data
-                                )
+                                adapter.submitList(result.data)
                             }
                             is Result.Error -> {
                                 isLoading = false
