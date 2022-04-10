@@ -53,7 +53,7 @@ class ChooseFavoritesActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 isLoading = false
-                                activityCoinsRecycler.adapter = OptionItemAdapter(
+                                activityCoinsRecycler.adapter = ChoseFavoriteItemAdapter(
                                     viewModel,
                                     result.data
                                 )

@@ -46,7 +46,7 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/option_item"/>
+        tools:listitem="@layout/chose_favorite_item"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
